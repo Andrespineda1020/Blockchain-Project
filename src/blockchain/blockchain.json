@@ -1,108 +1,155 @@
-class BinaryTreeNode {
-  constructor(userName) {
-    this.userName = userName;
-    this.collectibles = [];
-    this.parent = null;
-  }
-class BinarySearchTree {
-  constructor() {
-    this.root = null;
-    this.size = 0;
-  }
+<script>
 
-
-  // Insert new node into the Blockchin.
-  add(value) {
-    const newNode = new BinaryTreeNode(value);
-
-    if (this.root) {
-     if (value < parent.value) {
-        parent.setLeftAndUpdateParent(newNode);
-      } else {
-        parent.setRightAndUpdateParent(newNode);
-      }
-    } else {
-      this.root = newNode;
-    }
-    this.size += 1;
-    return newNode;
-  }
-
-
-// Find if a node is already on the Blockchain
-  has(value) {
-    return !!this.find(value);
-  }
-
-
-// Finds specific node in the blockchain based on the value assigned to the node.
-  find(value) {
-    return this.findNodeAndParent(value).found;
-  }
-
-
-//Get the rightmost node of the whole (tree) Blockchain or the subtree.
-  getRightmost(node = this.root) {
-    if (!node || !node.right) {
-      return node;
-    }
-    return this.getMax(node.right);
-  }
-
-
-  //Get the leftmost node of the whole (tree) Blockchain or the subtree.
-  getLeftmost(node = this.root) {
-    if (!node || !node.left) {
-      return node;
-    }
-    return this.getMin(node.left);
-  }
-
-
-//Removes node with given value from the tree.
-  remove(value) {
-    const { found: nodeToRemove, parent } = this.findNodeAndParent(value); // <1>
-
-    if (!nodeToRemove) return false; // <2>
-
-    // Combine left and right children into one subtree without nodeToRemove
-    const removedNodeChildren = this.combineLeftIntoRightSubtree(nodeToRemove); // <3>
-
-    if (nodeToRemove === this.root) { // <5>
-      // Replace (root) node to delete with the combined subtree.
-      this.root = removedNodeChildren;
-      if (this.root) { this.root.parent = null; } // clearing up old parent
-    } else if (nodeToRemove.isParentLeftChild) { // <6>
-      // Replace node to delete with the combined subtree.
-      parent.setLeftAndUpdateParent(removedNodeChildren);
-    } else {
-      parent.setRightAndUpdateParent(removedNodeChildren);
-    }
-    this.size -= 1;
-    return true;
-  }
-
-
-   // Combines left into right subtree if the parent is removed.
-  combineLeftIntoRightSubtree(node) {
-    if (node.right) {
-      const leftmost = this.getLeftmost(node.right);
-      leftmost.setLeftAndUpdateParent(node.left);
-      return node.right;
-    }
-    return node.left;
-  }
-
-
-// In order traversal of the blockchain.
-   inOrderTraversal(node = this.root) {
-    if (node && node.left) { yield* this.inOrderTraversal(node.left); }
-    yield node;
-    if (node && node.right) { yield* this.inOrderTraversal(node.right); }
-  }
+// Create Node of LinkedList
+function Node(userName) {
+		this.userName = userName;
+    this.rankingNum = 0;
+    this.collectibles = []; 
+		this.next = null;
 }
 
-module.exports = BinarySearchTree;
-{
+// To initialize a linkedlist
+function LinkedList(list) {
+	this.head = list || null
+}
 
+// Function to insert The new Node into the linkedList
+LinkedList.prototype.insert = function(userName) {
+
+		// Check if the linked list is empty
+		// so insert first node and lead head
+		// points to generic node
+		if (this.head === null)
+			this.head = new Node(userName);
+
+		else {
+
+			// If linked list is not empty, insert the node
+			// at the end of the linked list
+			let list = this.head;
+			while (list.next) {
+				list = list.next;
+			}
+
+			// Now here list pointer points to last
+			// node let’s insert out new node in it
+			list.next = new Node(data)
+		}
+}
+
+// Function to print linkedList
+LinkedList.prototype.iterate = function() {
+
+		// First we will check whether out
+		// linked list is empty or node
+		if (this.head === null)
+			return null;
+
+		// If linked list is not empty we will
+		// iterate from each Node and prints
+		// it’s value store in “data” property
+
+		let list = this.head;
+
+		// we will iterate until our list variable
+		// contains the “Next” value of the last Node
+		// i.e-> null
+		while (list) {
+			document.write(list.rankingNum)
+			if (list.next)
+				document.write(' -> ')
+			list = list.next
+		}
+}
+
+// Function to mergesort a linked list
+LinkedList.prototype.mergeSort = function(list) {
+
+		if (list.next === null)
+			return list;
+
+		let count = 0;
+		let countList = list
+		let leftPart = list;
+		let leftPointer = list;
+		let rightPart = null;
+		let rightPointer = null;
+
+		// Counting the nodes in the received linkedlist
+		while (countList.next !== null) {
+			count++;
+			countList = countList.next;
+		}
+
+		// counting the mid of the linked list
+		let mid = Math.floor(count / 2)
+		let count2 = 0;
+
+		// separating the left and right part with
+		// respect to mid node in tke linked list
+		while (count2 < mid) {
+			count2++;
+			leftPointer = leftPointer.next;
+		}
+
+		rightPart = new LinkedList(leftPointer.next);
+		leftPointer.next = null;
+
+		// Here are two linked list which
+		// contains the left most nodes and right
+		// most nodes of the mid node
+		return this._mergeSort(this.mergeSort(leftPart),
+								this.mergeSort(rightPart.head))
+}
+
+// Merging both lists in sorted manner
+LinkedList.prototype._mergeSort = function(left, right) {
+
+		// Create a new empty linked list
+		let result = new LinkedList()
+
+		let resultPointer = result.head;
+		let pointerLeft = left;
+		let pointerRight = right;
+
+
+		// If true then add left most node value in result,
+		// increment left pointer else do the same in
+		// right linked list.
+		// This loop will be executed until pointer's of
+		// a left node or right node reached null
+		while (pointerLeft && pointerRight) {
+			let tempNode = null;
+
+			// Check if the right node's value is greater than
+			// left node's value
+			if (pointerLeft.rankingNum > pointerRight.rankingNum) {
+				tempNode = pointerRight.node
+				pointerRight = pointerRight.next;
+			}
+			else {
+				tempNode = pointerLeft.rankingNum
+				pointerLeft = pointerLeft.next;
+			}
+
+			if (result.head == null) {
+				result.head = new Node(tempNode)
+				resultPointer = result.head
+			}
+			else {
+				resultPointer.next = new Node(tempNode)
+				resultPointer = resultPointer.next
+			}
+		}
+
+		// Add the remaining elements in the last of resultant
+		// linked list
+		resultPointer.next = pointerLeft;
+		while (resultPointer.next)
+			resultPointer = resultPointer.next
+
+			resultPointer.next = pointerRight
+
+		// Result is the new sorted linked list
+		return result.head;
 }
