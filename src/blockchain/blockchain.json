@@ -1,3 +1,108 @@
+class BinaryTreeNode {
+  constructor(userName) {
+    this.userName = userName;
+    this.collectibles = [];
+    this.parent = null;
+  }
+class BinarySearchTree {
+  constructor() {
+    this.root = null;
+    this.size = 0;
+  }
+
+
+  // Insert new node into the Blockchin.
+  add(value) {
+    const newNode = new BinaryTreeNode(value);
+
+    if (this.root) {
+     if (value < parent.value) {
+        parent.setLeftAndUpdateParent(newNode);
+      } else {
+        parent.setRightAndUpdateParent(newNode);
+      }
+    } else {
+      this.root = newNode;
+    }
+    this.size += 1;
+    return newNode;
+  }
+
+
+// Find if a node is already on the Blockchain
+  has(value) {
+    return !!this.find(value);
+  }
+
+
+// Finds specific node in the blockchain based on the value assigned to the node.
+  find(value) {
+    return this.findNodeAndParent(value).found;
+  }
+
+
+//Get the rightmost node of the whole (tree) Blockchain or the subtree.
+  getRightmost(node = this.root) {
+    if (!node || !node.right) {
+      return node;
+    }
+    return this.getMax(node.right);
+  }
+
+
+  //Get the leftmost node of the whole (tree) Blockchain or the subtree.
+  getLeftmost(node = this.root) {
+    if (!node || !node.left) {
+      return node;
+    }
+    return this.getMin(node.left);
+  }
+
+
+//Removes node with given value from the tree.
+  remove(value) {
+    const { found: nodeToRemove, parent } = this.findNodeAndParent(value); // <1>
+
+    if (!nodeToRemove) return false; // <2>
+
+    // Combine left and right children into one subtree without nodeToRemove
+    const removedNodeChildren = this.combineLeftIntoRightSubtree(nodeToRemove); // <3>
+
+    if (nodeToRemove === this.root) { // <5>
+      // Replace (root) node to delete with the combined subtree.
+      this.root = removedNodeChildren;
+      if (this.root) { this.root.parent = null; } // clearing up old parent
+    } else if (nodeToRemove.isParentLeftChild) { // <6>
+      // Replace node to delete with the combined subtree.
+      parent.setLeftAndUpdateParent(removedNodeChildren);
+    } else {
+      parent.setRightAndUpdateParent(removedNodeChildren);
+    }
+    this.size -= 1;
+    return true;
+  }
+
+
+   // Combines left into right subtree if the parent is removed.
+  combineLeftIntoRightSubtree(node) {
+    if (node.right) {
+      const leftmost = this.getLeftmost(node.right);
+      leftmost.setLeftAndUpdateParent(node.left);
+      return node.right;
+    }
+    return node.left;
+  }
+
+
+// In order traversal of the blockchain.
+   inOrderTraversal(node = this.root) {
+    if (node && node.left) { yield* this.inOrderTraversal(node.left); }
+    yield node;
+    if (node && node.right) { yield* this.inOrderTraversal(node.right); }
+  }
+}
+
+module.exports = BinarySearchTree;
 {
 
 }
