@@ -1,5 +1,4 @@
 import React from "react";
-import pokemon from "../pokemon.json";
 import { makeStyles } from "@material-ui/core/styles";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
@@ -25,6 +24,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function NestedList() {
+    let blockchain = require("../jsons/" + this.props.blockchain + ".json");
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
 
@@ -34,14 +34,14 @@ export default function NestedList() {
 
     const handleTrade = () => {};
 
-    const users = pokemon.people.map(user => {
-        const pokeTemp = user.pokemon.map(poke => {
+    const users = blockchain.wallets.map(user => {
+        const collectibles = user.map(collectible => {
             return (
                 <ListItem button className={classes.nested}>
                     <ListItemIcon>
                         <StarBorder />
                     </ListItemIcon>
-                    <ListItemText primary={poke} />
+                    <ListItemText primary={collectible} />
                     <Button
                         variant="contained"
                         color="primary"
@@ -58,12 +58,12 @@ export default function NestedList() {
                     <ListItemIcon>
                         <SendIcon />
                     </ListItemIcon>
-                    <ListItemText primary={user.name + " " + user.lastname} />
+                    <ListItemText primary={user.name} />
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        {pokeTemp}
+                        {collectibles}
                     </List>
                 </Collapse>
             </div>
@@ -82,57 +82,6 @@ export default function NestedList() {
             className={classes.root}
         >
             {users}
-            {/* <ListItem button onClick={handleClick}>
-                <ListItemIcon>
-                    <SendIcon />
-                </ListItemIcon>
-                <ListItemText primary="User 1" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                            <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText primary="Starred" />
-                    </ListItem>
-                </List>
-            </Collapse>
-            <ListItem button onClick={handleClick}>
-                <ListItemIcon>
-                    <DraftsIcon />
-                </ListItemIcon>
-                <ListItemText primary="User 2" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                            <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText primary="Starred" />
-                    </ListItem>
-                </List>
-            </Collapse>
-            <ListItem button onClick={handleClick}>
-                <ListItemIcon>
-                    <InboxIcon />
-                </ListItemIcon>
-                <ListItemText primary="User 3" />
-                {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                    <ListItem button className={classes.nested}>
-                        <ListItemIcon>
-                            <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText primary="Starred" />
-                    </ListItem>
-                </List>
-            </Collapse> */}
         </List>
     );
 }
