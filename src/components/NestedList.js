@@ -1,5 +1,4 @@
 import React from "react";
-import "./NestedList.css";
 import pokemon from "../pokemon.json";
 import { makeStyles } from "@material-ui/core/styles";
 import ListSubheader from "@material-ui/core/ListSubheader";
