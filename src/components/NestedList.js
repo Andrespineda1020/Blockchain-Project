@@ -41,7 +41,7 @@ export default function Blockchain() {
         setOpen(!open);
     };
     const openTrade = () => {
-        setOpenTrade(!openTrade);
+        setTrade(!trade);
       };
 
     function onSendMessage(message) {
@@ -75,7 +75,7 @@ export default function Blockchain() {
                         Trade
                     </Button>
                 </ListItem>
-                <Dialog open={open} onClose={openTrade} aria-labelledby="form-dialog-title">
+                <Dialog open={trade} onClose={openTrade} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Trade</DialogTitle>
                     <DialogContent>
                     <DialogContentText>
@@ -91,10 +91,10 @@ export default function Blockchain() {
                     />
                     </DialogContent>
                     <DialogActions>
-                    <Button onClick={handleCloseTrade} color="primary">
+                    <Button onClick={openTrade} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleCloseTrade} color="primary">
+                    <Button onClick={openTrade} color="primary">
                         Send Request FIX THE FUNC
                     </Button>
                     </DialogActions>
@@ -104,7 +104,7 @@ export default function Blockchain() {
         });
         return (
             <div>
-                <ListItem button onClick={handleOpenTrade}>
+                <ListItem button onClick={handleOpen}>
                     <ListItemIcon>
                         <SendIcon />
                     </ListItemIcon>
