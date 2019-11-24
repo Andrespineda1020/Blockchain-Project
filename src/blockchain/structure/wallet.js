@@ -85,7 +85,7 @@ printList()
     var curr = this.head;
     var str = "";
     while (curr) {
-        str = str+ curr.name1 + " " + "sends " + curr.name2 + " " + curr.user1Value + " and " curr.name2 + " " + "sends " + curr.name1 + " " + curr.user2Value;
+        str = str+ curr.name1 + " " + "sends " + curr.name2 + " " + curr.user1Value + " and " + curr.name2 + " " + "sends " + curr.name1 + " " + curr.user2Value;
         curr = curr.next;
     }
     console.log(str);

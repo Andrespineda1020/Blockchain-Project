@@ -5,6 +5,50 @@ function Node(userName) {
     this.rankingNum = 0;
     this.collectibles = [];
 		this.next = null;
+
+    // Key Generation Code
+    //privateKey generation
+    const max = Buffer.from("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364140", 'hex');
+    let isInvalid = true;
+    let privateKey;
+    while (isInvalid) {
+      privateKey = secureRandom.randomBuffer(32);
+      if (Buffer.compare(max, privateKey) === 1) {
+        isInvalid = false;
+      }
+    }
+// PublicKey Generation
+const keys = ecdsa.keyFromPrivate(privateKey);
+const publicKey = keys.getPublic('hex');
+
+// PublicKeyHash Generation
+const sha256 = require('js-sha256');
+const ripemd160 = require('ripemd160');
+let hash = sha256(Buffer.from(msg, 'hex'));
+let publicKeyHash = new ripemd160().update(Buffer.from(hash, 'hex')).digest();
+
+this.publicKeyHash = publicKeyHash;
+this.publicKey= publicKey;
+this.privateKey = privateKey;
+this.publicAddress = createPublicAddress(publicKeyHash);
+ 
+}
+
+// Function to create a createPublicAddress
+function createPublicAddress(publicKeyHash) {
+  // step 1 - add prefix "00" in hex
+  const step1 = Buffer.from("00" + publicKeyHash, 'hex');
+  // step 2 - create SHA256 hash of step 1
+  const step2 = sha256(step1);
+  // step 3 - create SHA256 hash of step 2
+  const step3 = sha256(Buffer.from(step2, 'hex'));
+  // step 4 - find the 1st byte of step 3 - save as "checksum"
+  const checksum = step3.substring(0, 8);
+  // step 5 - add step 1 + checksum
+  const step4 = step1.toString('hex') + checksum;
+  // return base 58 encoding of step 5
+  const address = base58.encode(Buffer.from(step4, 'hex'));
+  return address;
 }
 
 // To initialize a linkedlist
