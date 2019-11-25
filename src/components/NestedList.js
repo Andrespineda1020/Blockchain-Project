@@ -23,8 +23,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function NestedList() {
-    let blockchain = require("../jsons/" + this.props.blockchain + ".json");
+export default function NestedList(props) {
+    let blockchains = require("../jsons/" + props.blockchain + ".json");
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
 
@@ -34,7 +34,7 @@ export default function NestedList() {
 
     const handleTrade = () => {};
 
-    const users = blockchain.wallets.map(user => {
+    const users = blockchains.wallets.map(user => {
         const collectibles = user.map(collectible => {
             return (
                 <ListItem button className={classes.nested}>

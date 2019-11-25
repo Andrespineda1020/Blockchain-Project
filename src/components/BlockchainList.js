@@ -20,22 +20,23 @@ const useStyles = makeStyles(theme => ({
 export default function SimpleList() {
     const classes = useStyles();
 
+    let blockName = "";
+
     const listOfBlockchains = blockchains.blockchainNames.map(instance => {
         return (
-            <ListItem button component={Link} to={"/" + instance.name}>
+            <ListItem
+                button
+                component={Link}
+                to={"/chain"}
+                onClick={e => {
+                    blockName = instance.name;
+                }}
+            >
                 <ListItemIcon>
                     <InboxIcon />
                 </ListItemIcon>
                 <ListItemText primary={instance.name} />
             </ListItem>
-        );
-    });
-
-    const blockchainRoutes = blockchains.blockchainNames.map(instance => {
-        return (
-            <Route exact path={instance.name} key={instance.name}>
-                <NestedList blockchain={instance.name} />
-            </Route>
         );
     });
 
@@ -45,7 +46,11 @@ export default function SimpleList() {
                 <List component="nav" aria-label="main mailbox folders">
                     {listOfBlockchains}
                 </List>
-                <Switch>{blockchainRoutes}</Switch>
+                <Switch>
+                    <Route exact path="/chain">
+                        <NestedList blockchain="Pokemon" />
+                    </Route>
+                </Switch>
             </Router>
         </div>
     );
