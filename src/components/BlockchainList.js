@@ -28,10 +28,6 @@ export default function SimpleList() {
                 button
                 component={Link}
                 to={`/chain/${instance.name}`}
-                onMouseEnter={e => {
-                    console.log(instance.name);
-                    blockName = instance.name;
-                }}
             >
                 <ListItemIcon>
                     <InboxIcon />
