@@ -1,7 +1,5 @@
   
 import React from "react";
-// import "./NestedList.css";
-import pokemon from "./pokemon.json";
 import { makeStyles } from "@material-ui/core/styles";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
@@ -20,6 +18,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from '@material-ui/core/TextField';
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -32,7 +32,11 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+    
+=======
 export default function Blockchain() {
+    const {instance} = useParams();
+    let blockchains = require("../jsons/" + instance + ".json");
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
     const [trade, setTrade] = React.useState(false);
@@ -56,17 +60,19 @@ export default function Blockchain() {
         })
     }
 
-    const handleTrade = () => {};
+    const handleTrade = () => {
+        setTrade(!trade);
+    };
 
-    const users = pokemon.people.map(user => {
-        const pokeTemp = user.pokemon.map(poke => {
+    const users = blockchains.wallets.map(user => {
+        const collectibles = user.collectibles.map(collectible => {
             return (
                 <div>
                 <ListItem button className={classes.nested}>
                     <ListItemIcon>
                         <StarBorder />
                     </ListItemIcon>
-                    <ListItemText primary={poke} />
+                    <ListItemText primary={collectible} />
                     <Button
                         variant="contained"
                         color="primary"
@@ -74,6 +80,30 @@ export default function Blockchain() {
                     >
                         Trade
                     </Button>
+                    <Dialog open={trade} onClose={handleTrade} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">Trade</DialogTitle>
+                        <DialogContent>
+                        <DialogContentText>
+                            Send a message along with your trade request
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                        />
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={handleTrade} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleTrade} color="primary">
+                            Send Request
+                        </Button>
+                        </DialogActions>
+                    </Dialog>
                 </ListItem>
                 <Dialog open={trade} onClose={openTrade} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Trade</DialogTitle>
@@ -108,12 +138,12 @@ export default function Blockchain() {
                     <ListItemIcon>
                         <SendIcon />
                     </ListItemIcon>
-                    <ListItemText primary={user.name + " " + user.lastname} />
+                    <ListItemText primary={user.name} />
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                        {pokeTemp}
+                        {collectibles}
                     </List>
                 </Collapse>
             </div>

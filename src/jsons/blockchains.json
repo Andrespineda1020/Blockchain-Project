@@ -1,0 +1,13 @@
+{
+    "blockchainNames": [
+        {
+            "name": "Pokemon"
+        },
+        {
+            "name": "Digimon"
+        },
+        {
+            "name": "YuGiOh"
+        }
+    ]
+}
