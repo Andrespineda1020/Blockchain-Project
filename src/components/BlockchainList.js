@@ -1,5 +1,5 @@
 import React from "react";
-import blockchains from "../blockchains.json";
+import blockchains from "../jsons/blockchains.json";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -20,15 +20,16 @@ const useStyles = makeStyles(theme => ({
 export default function SimpleList() {
     const classes = useStyles();
 
-    let blockName = "";
+    let blockName = "Pokemon";
 
     const listOfBlockchains = blockchains.blockchainNames.map(instance => {
         return (
             <ListItem
                 button
                 component={Link}
-                to={"/chain"}
-                onClick={e => {
+                to={`/chain/${instance.name}`}
+                onMouseEnter={e => {
+                    console.log(instance.name);
                     blockName = instance.name;
                 }}
             >
@@ -47,8 +48,8 @@ export default function SimpleList() {
                     {listOfBlockchains}
                 </List>
                 <Switch>
-                    <Route exact path="/chain">
-                        <NestedList blockchain="Pokemon" />
+                    <Route exact path="/chain/:instance">
+                        <NestedList blockchain={blockName} />
                     </Route>
                 </Switch>
             </Router>

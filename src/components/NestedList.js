@@ -11,7 +11,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import StarBorder from "@material-ui/icons/StarBorder";
 import Button from "@material-ui/core/Button";
-
+import { useParams } from "react-router-dom";
 const useStyles = makeStyles(theme => ({
     root: {
         width: "100%",
@@ -24,7 +24,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function NestedList(props) {
-    let blockchains = require("../jsons/" + props.blockchain + ".json");
+    const {instance} = useParams();
+    let blockchains = require("../jsons/" + instance + ".json");
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
 
@@ -35,7 +36,7 @@ export default function NestedList(props) {
     const handleTrade = () => {};
 
     const users = blockchains.wallets.map(user => {
-        const collectibles = user.map(collectible => {
+        const collectibles = user.collectibles.map(collectible => {
             return (
                 <ListItem button className={classes.nested}>
                     <ListItemIcon>
