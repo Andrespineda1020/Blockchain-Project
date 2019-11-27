@@ -33,7 +33,7 @@ const SocketActions  = require('./actions');
 
 const socketListeners = require('./socketListeners');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // const blockChain = new BlockChain(null, io);
 
@@ -69,9 +69,13 @@ app.get('/chain', (req, res) => {
 });
 
 app.post('/request', (req, res) => {
+  try {
     const {message} = req.body;
     io.emit(SocketActions.REQUEST_TRADE, message);
     res.json({response: res.message}).end();
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 io.on('connection', (socket) => {

@@ -18,8 +18,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -32,8 +32,6 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-    
-=======
 export default function Blockchain() {
     const {instance} = useParams();
     let blockchains = require("../jsons/" + instance + ".json");
@@ -48,16 +46,18 @@ export default function Blockchain() {
         setTrade(!trade);
       };
 
-    function onSendMessage(message) {
+    function onSendMessage() {
+        let message;
         if (!message)
-          return
-    
-        this.props.onSendMessage(message, (err) => {
-          if (err)
-            return console.error(err)
-    
-        //   return setMessage({ message: '' })
-        })
+          message = "Hello World";
+        axios.post('http://localhost:3001/request', {message: message})
+            .then((res) => {
+                console.log("Res:" + res);
+            }, (err) => {
+                console.log("Error: " + err);
+            });
+        return console.log("sent");
+   
     }
 
     const handleTrade = () => {
@@ -99,13 +99,13 @@ export default function Blockchain() {
                         <Button onClick={handleTrade} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={handleTrade} color="primary">
+                        <Button onClick={onSendMessage} color="primary">
                             Send Request
                         </Button>
                         </DialogActions>
                     </Dialog>
                 </ListItem>
-                <Dialog open={trade} onClose={openTrade} aria-labelledby="form-dialog-title">
+                {/* <Dialog open={trade} onClose={openTrade} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Trade</DialogTitle>
                     <DialogContent>
                     <DialogContentText>
@@ -128,7 +128,7 @@ export default function Blockchain() {
                         Send Request FIX THE FUNC
                     </Button>
                     </DialogActions>
-                </Dialog>
+                </Dialog> */}
                 </div>
             );
         });

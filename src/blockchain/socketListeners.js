@@ -21,7 +21,7 @@ const socketListeners = (socket, chain) => {
   });
 
   socket.on(SocketActions.REQUEST_TRADE, (message) => {
-    console.log('Sending Message');
+    console.log('Request received: ' + message);
 
   });
 
