@@ -50,7 +50,7 @@ export default function Blockchain() {
         let message;
         if (!message)
           message = "Hello World";
-        axios.post('http://localhost:3001/request', {message: message})
+        axios.post('https://localhost:3001/request', {message: message})
             .then((res) => {
                 console.log("Res:" + res);
             }, (err) => {

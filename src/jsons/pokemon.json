@@ -5,8 +5,8 @@
     "wallets": [
         {
             "name": "Andres",
-            "address": "asiojdoi2a",
-            "next": "aosd039ad",
+            "address": "3002",
+            "next": "3003",
             "public_key": "aisjdoasidj",
             "collectibles": ["Charizard", "Snorlax"],
             "ranking": 1,
@@ -14,8 +14,8 @@
         },
         {
             "name": "Luccas",
-            "address": "sodju09asID",
-            "next": "APO(SUD09QWUE",
+            "address": "3003",
+            "next": "3004",
             "public_key": "AKISHD9aYD",
             "collectibles": ["Mewtwo", "Missingno"],
             "ranking": 1,
@@ -23,8 +23,8 @@
         },
         {
             "name": "Matthew",
-            "address": "ASDU(Q*@UDA(",
-            "next": "APO(APOSDU09@UEQD",
+            "address": "3004",
+            "next": "3002",
             "public_key": "ALKSIDJ*(QWUE(*@Q",
             "collectibles": ["Pikachu"],
             "ranking": 1,

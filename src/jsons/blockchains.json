@@ -1,13 +1,88 @@
 {
-    "blockchainNames": [
+    "genesis_block": "3000",
+    "ruleset": {"isManager": true},
+    "ledger": [],
+    "hasNewTransaction": false,
+    "wallets": [
         {
-            "name": "Pokemon"
+            "name": "Genesis",
+            "address": "3000",
+            "next": "3002",
+            "public_key": "ASJDQAJOSD",
+            "collectibles": [
+                {
+                    "name": "Pokemon",
+                    "first": 3000,
+                    "last": 3004
+                },
+                {
+                    "name": "Digimon",
+                    "first": 3000,
+                    "last": 3004
+                },
+                {
+                    "name": "YuGiOh",
+                    "first": 3000,
+                    "last": 3004
+                }
+            ],
+            "ranking": 0,
+            "is_online": true
         },
         {
-            "name": "Digimon"
+            "name": "Andres",
+            "address": "3002",
+            "next": "3003",
+            "public_key": "aisjdoasidj",
+            "collectibles": 
+            [
+                {
+                    "name": "Pokemon"
+                },
+                {
+                    "name": "Digimon"
+                }
+            ],
+            "ranking": 1,
+            "is_online": true
         },
         {
-            "name": "YuGiOh"
+            "name": "Luccas",
+            "address": "3003",
+            "next": "3004",
+            "public_key": "AKISHD9aYD",
+            "collectibles": 
+            [
+                {
+                    "name": "Pokemon"
+                },
+                {
+                    "name": "YuGiOh"
+                }
+            ],
+            "ranking": 1,
+            "is_online": true
+        },
+        {
+            "name": "Matthew",
+            "address": "3004",
+            "next": "3002",
+            "public_key": "ALKSIDJ*(QWUE(*@Q",
+            "collectibles": 
+            [
+                {
+                    "name": "Pokemon"
+                },
+                {
+                    "name": "Digimon"
+                },
+                {
+                    "name": "YuGiOh"
+                }
+            ],
+            "ranking": 1,
+            "is_online": true
         }
     ]
 }
+

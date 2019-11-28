@@ -16,13 +16,13 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: theme.palette.background.paper
     }
 }));
-
+//Insert a prop "isAll" to make the list of blockchains = genesis or = myWallet
 export default function SimpleList() {
     const classes = useStyles();
 
     let blockName = "Pokemon";
 
-    const listOfBlockchains = blockchains.blockchainNames.map(instance => {
+    const listOfBlockchains = blockchains.wallets[0].collectibles.map(instance => {
         return (
             <ListItem
                 button
