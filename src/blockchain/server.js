@@ -90,6 +90,7 @@
 // httpServer.listen(PORT, () => console.info(`Express server running on ${PORT}...`));
 
 //HTTP VERSION
+const bodyParser = require('body-parser');
 const express = require('express')
 const app = express();
 const detect = require('detect-port');
@@ -97,50 +98,68 @@ const axios = require('axios');
 const config = require('../jsons/myconfig.json');
 const MIN_PORT = 3001;
 const MAX_PORT = 4000;
-const address = 'https.//localhost:';
+const address = 'http://localhost:';
 const PORT = process.env.PORT || config.address || MIN_PORT;
-
 let blockchain = require('../jsons/blockchains.json');
-let myWallet = getMyWallet();
+let myWallet = undefined;
+
+app.use(bodyParser.json());
+
+async function getMyWallet() {
+  await blockchain.wallets.forEach(wallet => {
+    if (wallet.address == PORT) {
+      myWallet = wallet;
+    }
+  });
+};
+
+//Start up functions
+getMyWallet();
 
 
-app.get('/', (req, res) => res.send('Hello World!'));
+app.get('/', (req, res) => res.send(req.body));
 
 //Receive the current "Token" with the Blockchain Info
 app.post('/receive', (req, res) => {
   console.log("Receiving block...");
-  let blockchain = req.body;
-  if (blockchain.hasNewTransaction) {
-    console.log("Processing block...");
-    //Does stuff
-  } else {
-    sendToken(blockchain, myWallet);
-    console.log("Response sent");
-    res.status(200).send(blockchain);
+  try {
+    let _blockchain = req.body;
+    // console.log(req.body);
+    if (_blockchain.hasNewTransaction) {
+      console.log("Processing block...");
+      //Does stuff
+      res.status(200).send("Modified"); //TODO maybe add something else
+    } else {
+      sendToken(_blockchain, myWallet);
+      console.log("Response sent");
+      res.status(301).send("Not Modified");
+    }
+  } catch (err) {
+    console.log("Error");
+    res.status(500).send("Error");
   }
 });
 
-app.listen(PORT, () => console.log(`Local server running on PORT: ${PORT}!`));
+app.listen(PORT, () => console.log(`Local server running on PORT: ${PORT}!\nWelcome ${myWallet.name} to the ${blockchain.name} blockchain!`));
 
 
 sendToken = (_blockchain, _wallet) => {
-  console.log("Sending block");
-  axios.post(address + _wallet.next + '/receive', {_blockchain})
-    .then((res) => {
-      console.log("Block received by " + _wallet.next.address);
-      console.log(res);
-    }, (err) => {
-      console.log("Error: " + err);
-      console.log("Retrying with " + _wallet.next.next.address);
-      sendToken(_blockchain, _wallet.next);
-    }
+  console.log("Sending block to " + _wallet.next.address);
+  try {
+    axios.post(address + _wallet.next + '/receive', {_blockchain})
+      .then((res) => {
+        console.log("Block received by " + _wallet.next.address);
+        console.log(res);
+      }, (err) => {
+        console.log("Error: " + err);
+        console.log("Retrying with next block");
+        sendToken(_blockchain, _wallet.next);
+      }
     );
-};
-
-getMyWallet = () => {
-  for (const wallet in blockchain.wallets) {
-    if (wallet.address == PORT)
-      return wallet;
+  } catch (err) {
+      console.log(err);
   }
 };
+
+
 //TODO Need a sign up function to take the private address in order to accept the PORT
