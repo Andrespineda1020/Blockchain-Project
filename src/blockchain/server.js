@@ -101,21 +101,9 @@ const MAX_PORT = 4000;
 const address = 'http://localhost:';
 const PORT = process.env.PORT || config.address || MIN_PORT;
 let blockchain = require('../jsons/blockchains.json');
-let myWallet = undefined;
+let myWallet = blockchain.wallets[PORT];
 
 app.use(bodyParser.json());
-
-async function getMyWallet() {
-  await blockchain.wallets.forEach(wallet => {
-    if (wallet.address == PORT) {
-      myWallet = wallet;
-    }
-  });
-};
-
-//Start up functions
-getMyWallet();
-
 
 app.get('/', (req, res) => res.send(req.body));
 
@@ -123,16 +111,14 @@ app.get('/', (req, res) => res.send(req.body));
 app.post('/receive', (req, res) => {
   console.log("Receiving block...");
   try {
-    let _blockchain = req.body;
-    // console.log(req.body);
-    if (_blockchain.hasNewTransaction) {
+    if (req.body.hasNewTransaction) {
       console.log("Processing block...");
       //Does stuff
-      res.status(200).send("Modified"); //TODO maybe add something else
+      res.status(201).send("Modified"); //TODO maybe add something else
     } else {
-      sendToken(_blockchain, myWallet);
+      sendToken(req.body, myWallet);
       console.log("Response sent");
-      res.status(301).send("Not Modified");
+      res.status(202).send("Not Modified");
     }
   } catch (err) {
     console.log("Error");
@@ -142,18 +128,19 @@ app.post('/receive', (req, res) => {
 
 app.listen(PORT, () => console.log(`Local server running on PORT: ${PORT}!\nWelcome ${myWallet.name} to the ${blockchain.name} blockchain!`));
 
-
 sendToken = (_blockchain, _wallet) => {
-  console.log("Sending block to " + _wallet.next.address);
+  console.log("Sending block to " + _wallet.next + "...");
   try {
-    axios.post(address + _wallet.next + '/receive', {_blockchain})
+    axios.post(address + _wallet.next + '/receive', _blockchain)
       .then((res) => {
-        console.log("Block received by " + _wallet.next.address);
-        console.log(res);
+        console.log("Block received by " + _wallet.next);
+        console.log(res.status);
+        //TODO possibly check for received code
       }, (err) => {
         console.log("Error: " + err);
         console.log("Retrying with next block");
-        sendToken(_blockchain, _wallet.next);
+        
+        sendToken(_blockchain, _blockchain.wallets[_wallet.next]);
       }
     );
   } catch (err) {
