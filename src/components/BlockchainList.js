@@ -22,13 +22,11 @@ export default function SimpleList() {
 
     let blockName = "Pokemon";
 
-    const listOfBlockchains = blockchains.wallets[blockchains.genesis_block].collectibles.map(instance => {
+    const listOfBlockchains = blockchains.wallets[
+        blockchains.genesis_block
+    ].collectibles.map(instance => {
         return (
-            <ListItem
-                button
-                component={Link}
-                to={`/chain/${instance.name}`}
-            >
+            <ListItem button component={Link} to={`/chain/${instance.name}`}>
                 <ListItemIcon>
                     <InboxIcon />
                 </ListItemIcon>

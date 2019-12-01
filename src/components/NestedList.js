@@ -1,4 +1,3 @@
-  
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ListSubheader from "@material-ui/core/ListSubheader";
@@ -12,19 +11,18 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import StarBorder from "@material-ui/icons/StarBorder";
 import Button from "@material-ui/core/Button";
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const useStyles = makeStyles(theme => ({
     root: {
         width: "100%",
-        maxWidth: 360,
+        maxWidth: 720,
         backgroundColor: theme.palette.background.paper
     },
     nested: {
@@ -33,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Blockchain() {
-    const {instance} = useParams();
+    const { instance } = useParams();
     let blockchains = require("../jsons/" + instance + ".json");
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
@@ -44,20 +42,20 @@ export default function Blockchain() {
     };
     const openTrade = () => {
         setTrade(!trade);
-      };
+    };
 
     function onSendMessage() {
         let message;
-        if (!message)
-          message = "Hello World";
-        axios.post('https://localhost:3001/request', {message: message})
-            .then((res) => {
+        if (!message) message = "Hello World";
+        axios.post("https://localhost:3001/request", { message: message }).then(
+            res => {
                 console.log("Res:" + res);
-            }, (err) => {
+            },
+            err => {
                 console.log("Error: " + err);
-            });
+            }
+        );
         return console.log("sent");
-   
     }
 
     const handleTrade = () => {
@@ -68,67 +66,47 @@ export default function Blockchain() {
         const collectibles = user.collectibles.map(collectible => {
             return (
                 <div>
-                <ListItem button className={classes.nested}>
-                    <ListItemIcon>
-                        <StarBorder />
-                    </ListItemIcon>
-                    <ListItemText primary={collectible} />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={openTrade}
-                    >
-                        Trade
-                    </Button>
-                    <Dialog open={trade} onClose={handleTrade} aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">Trade</DialogTitle>
-                        <DialogContent>
-                        <DialogContentText>
-                            Send a message along with your trade request
-                        </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Email Address"
-                            type="email"
-                            fullWidth
-                        />
-                        </DialogContent>
-                        <DialogActions>
-                        <Button onClick={handleTrade} color="primary">
-                            Cancel
+                    <ListItem button className={classes.nested}>
+                        <ListItemIcon>
+                            <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText primary={collectible} />
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={openTrade}
+                        >
+                            Trade
                         </Button>
-                        <Button onClick={onSendMessage} color="primary">
-                            Send Request
-                        </Button>
-                        </DialogActions>
-                    </Dialog>
-                </ListItem>
-                {/* <Dialog open={trade} onClose={openTrade} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Trade</DialogTitle>
-                    <DialogContent>
-                    <DialogContentText>
-                        Send a message along with your trade request
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Email Address"
-                        type="email"
-                        fullWidth
-                    />
-                    </DialogContent>
-                    <DialogActions>
-                    <Button onClick={openTrade} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={openTrade} color="primary">
-                        Send Request FIX THE FUNC
-                    </Button>
-                    </DialogActions>
-                </Dialog> */}
+                        <Dialog
+                            open={trade}
+                            onClose={handleTrade}
+                            aria-labelledby="form-dialog-title"
+                        >
+                            <DialogTitle id="form-dialog-title">
+                                Trade
+                            </DialogTitle>
+                            <DialogContent>
+                                Send a message along with your trade request!
+                                <TextField
+                                    autoFocus
+                                    margin="dense"
+                                    id="name"
+                                    label="Email Address"
+                                    type="email"
+                                    fullWidth
+                                />
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleTrade} color="primary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={onSendMessage} color="primary">
+                                    Send Request
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </ListItem>
                 </div>
             );
         });
@@ -156,7 +134,7 @@ export default function Blockchain() {
             aria-labelledby="nested-list-subheader"
             subheader={
                 <ListSubheader component="div" id="nested-list-subheader">
-                    Pokemon Blockchain
+                    {instance} Blockchain
                 </ListSubheader>
             }
             className={classes.root}
