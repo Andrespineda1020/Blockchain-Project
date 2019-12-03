@@ -4,7 +4,6 @@
 // - Check who is online (?) TODO verify and think about this
 // - ... to think about more actions
 
-
 // Transaction flow:
 // - User A sends request to B
 // - B accepts A request
@@ -90,63 +89,67 @@
 // httpServer.listen(PORT, () => console.info(`Express server running on ${PORT}...`));
 
 //HTTP VERSION
-const bodyParser = require('body-parser');
-const express = require('express')
+const bodyParser = require("body-parser");
+const express = require("express");
 const app = express();
-const detect = require('detect-port');
-const axios = require('axios');
-const config = require('../jsons/myconfig.json');
+const detect = require("detect-port");
+const axios = require("axios");
+const config = require("../jsons/myconfig.json");
 const MIN_PORT = 3001;
 const MAX_PORT = 4000;
-const address = 'http://localhost:';
+const address = "http://localhost:";
 const PORT = process.env.PORT || config.address || MIN_PORT;
-let blockchain = require('../jsons/blockchains.json');
+let blockchain = require("../jsons/blockchains.json");
 let myWallet = blockchain.wallets[PORT];
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => res.send(req.body));
+app.get("/", (req, res) => res.send(req.body));
 
 //Receive the current "Token" with the Blockchain Info
-app.post('/receive', (req, res) => {
-  console.log("Receiving block...");
-  try {
-    if (req.body.hasNewTransaction) {
-      console.log("Processing block...");
-      //Does stuff
-      res.status(201).send("Modified"); //TODO maybe add something else
-    } else {
-      sendToken(req.body, myWallet);
-      console.log("Response sent");
-      res.status(202).send("Not Modified");
+app.post("/receive", (req, res) => {
+    console.log("Receiving block...");
+    try {
+        if (req.body.hasNewTransaction) {
+            console.log("Processing block...");
+            //Does stuff
+            res.status(201).send("Modified"); //TODO maybe add something else
+        } else {
+            sendToken(req.body, myWallet);
+            console.log("Response sent");
+            res.status(202).send("Not Modified");
+        }
+    } catch (err) {
+        console.log("Error");
+        res.status(500).send("Error");
     }
-  } catch (err) {
-    console.log("Error");
-    res.status(500).send("Error");
-  }
 });
 
-app.listen(PORT, () => console.log(`Local server running on PORT: ${PORT}!\nWelcome ${myWallet.name} to the ${blockchain.name} blockchain!`));
+app.listen(PORT, () =>
+    console.log(
+        `Local server running on PORT: ${PORT}!\nWelcome ${myWallet.name} to the ${blockchain.name} blockchain!`
+    )
+);
 
 sendToken = (_blockchain, _wallet) => {
-  console.log("Sending block to " + _wallet.next + "...");
-  try {
-    axios.post(address + _wallet.next + '/receive', _blockchain)
-      .then((res) => {
-        console.log("Block received by " + _wallet.next);
-        console.log(res.status);
-        //TODO possibly check for received code
-      }, (err) => {
-        console.log("Error: " + err);
-        console.log("Retrying with next block");
-        
-        sendToken(_blockchain, _blockchain.wallets[_wallet.next]);
-      }
-    );
-  } catch (err) {
-      console.log(err);
-  }
-};
+    console.log("Sending block to " + _wallet.next + "...");
+    try {
+        axios.post(address + _wallet.next + "/receive", _blockchain).then(
+            res => {
+                console.log("Block received by " + _wallet.next);
+                console.log(res.status);
+                //TODO possibly check for received code
+            },
+            err => {
+                console.log("Error: " + err);
+                console.log("Retrying with next block");
 
+                sendToken(_blockchain, _blockchain.wallets[_wallet.next]);
+            }
+        );
+    } catch (err) {
+        console.log(err);
+    }
+};
 
 //TODO Need a sign up function to take the private address in order to accept the PORT

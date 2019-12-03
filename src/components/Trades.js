@@ -38,12 +38,12 @@ export default function Blockchain() {
     let myPort = require("../jsons/myconfig.json");
 
     const classes = useStyles();
-    // const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(true);
     // const [trade, setTrade] = React.useState(false);
 
-    // const handleOpen = () => {
-    //     setOpen(!open);
-    // };
+    const handleOpen = () => {
+        setOpen(!open);
+    };
     // const openTrade = () => {
     //     setTrade(!trade);
     // };
@@ -64,6 +64,11 @@ export default function Blockchain() {
 
     const approveTrade = () => {
         // change isAccepted to true
+        // currentBlockchain.ledger.isPending;
+    };
+
+    const updateBackEndJson = file => {
+        axios.post("localhost:" + myPort.address + "/update", file);
     };
 
     const rejectTrade = () => {
