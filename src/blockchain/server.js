@@ -1,96 +1,6 @@
-// /*
-// File responsible for operating P2P communications such as
-// - Request for trade
-// - Check who is online (?) TODO verify and think about this
-// - ... to think about more actions
-
-// Transaction flow:
-// - User A sends request to B
-// - B accepts A request
-// - Common ancestor C is found
-// - C receives A and B's JSON
-// - C validates the JSON
-// - C updates its JSON and populates to the branches
-
-// Resources:
-// https://blog.logrocket.com/beyond-rest-using-websockets-for-two-way-communication-in-your-react-app-884eff6655f5/
-// https://blog.bitlabstudio.com/a-simple-chat-app-with-react-node-and-websocket-35d3c9835807?gi=166497398e7e
-// https://www.valentinog.com/blog/socket-react/
-// https://itnext.io/building-a-node-js-websocket-chat-app-with-socket-io-and-react-473a0686d1e1
-// */
-
-// const app = require('express')();
-// const bodyParser = require('body-parser');
-// const httpServer = require('http').Server(app);
-// const axios = require('axios');
-// const io = require('socket.io')(httpServer);
-// const client = require('socket.io-client');
-// const operations = require('./operations');
-
-// // const BlockChain = require('./models/chain');
-// const SocketActions  = require('./actions');
-
-// const socketListeners = require('./socketListeners');
-
-// const PORT = process.env.PORT || 3001;
-
-// // const blockChain = new BlockChain(null, io);
-
-// app.use(bodyParser.json());
-
-// app.post('/nodes', (req, res) => {
-//   const { host, port } = req.body;
-//   const { callback } = req.query;
-//   const node = `http://${host}:${port}`;
-//   const socketNode = socketListeners(client(node), blockChain);
-// //   blockChain.addNode(socketNode, blockChain);
-//   if (callback === 'true') {
-//     console.info(`Added node ${node} back`);
-//     res.json({ status: 'Added node Back' }).end();
-//   } else {
-//     axios.post(`${node}/nodes?callback=true`, {
-//       host: req.hostname,
-//       port: PORT,
-//     });
-//     console.info(`Added node ${node}`);
-//     res.json({ status: 'Added node' }).end();
-//   }
-// });
-
-// app.post('/transaction', (req, res) => {
-//   const { sender, receiver, amount } = req.body;
-//   io.emit(SocketActions.ADD_TRANSACTION, sender, receiver, amount);
-//   res.json({ message: 'transaction success' }).end();
-// });
-
-// app.get('/chain', (req, res) => {
-// //   res.json(blockChain.toArray()).end();
-// });
-
-// app.post('/request', (req, res) => {
-//   try {
-//     const {message} = req.body;
-//     io.emit(SocketActions.REQUEST_TRADE, message);
-//     res.json({response: res.message}).end();
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
-
-// io.on('connection', (socket) => {
-//   console.info(`Socket connected, ID: ${socket.id}`);
-//   socket.on('disconnect', () => {
-//     console.log(`Socket disconnected, ID: ${socket.id}`);
-//   });
-// });
-
-// // blockChain.addNode(socketListeners(client(`http://localhost:${PORT}`), blockChain));
-
-// httpServer.listen(PORT, () => console.info(`Express server running on ${PORT}...`));
-
-//HTTP VERSION
-const bodyParser = require("body-parser");
-const express = require("express");
+const bodyParser = require('body-parser');
+const express = require('express')
+const fs = require('fs');
 const app = express();
 const detect = require("detect-port");
 const axios = require("axios");
@@ -99,7 +9,8 @@ const MIN_PORT = 3001;
 const MAX_PORT = 4000;
 const address = "http://localhost:";
 const PORT = process.env.PORT || config.address || MIN_PORT;
-let blockchain = require("../jsons/blockchains.json");
+const Block = require('./structure/Block');
+let blockchain = require('../jsons/blockchains.json');
 let myWallet = blockchain.wallets[PORT];
 
 app.use(bodyParser.json());
@@ -107,30 +18,78 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => res.send(req.body));
 
 //Receive the current "Token" with the Blockchain Info
-app.post("/receive", (req, res) => {
-    console.log("Receiving block...");
-    try {
-        if (req.body.hasNewTransaction) {
-            console.log("Processing block...");
-            //Does stuff
-            res.status(201).send("Modified"); //TODO maybe add something else
-        } else {
-            sendToken(req.body, myWallet);
-            console.log("Response sent");
-            res.status(202).send("Not Modified");
-        }
-    } catch (err) {
-        console.log("Error");
-        res.status(500).send("Error");
+app.post('/receive', (req, res) => {
+  console.log("Receiving block...");
+  try {
+    if (Object.keys(req.body.ledger).length != Object.keys(blockchain.ledger).length) {
+      console.log("Processing block...");
+      //Does stuff
+      let pending = checkPending(req.body.ledger);
+      // let myTransactions = checkIfItsMine(pending);
+      //If I have any transaction
+      if (pending.length > 0) {
+        console.log("Validating " + pending.length + " transactions");
+        pending.forEach((transaction) => {
+          validateTransaction(transaction);
+        });
+        console.log("Writing pending transactions");
+        fs.writeFile('./src/jsons/' + req.body.name + '.json', JSON.stringify(req.body), 'utf8', (err) => {
+          if (err) console.log(err)
+          else console.log("Local Blockchain Updated!");
+        });
+      };
+      res.status(201).send("Modified"); //TODO maybe add something else
+      sendToken(blockchain, myWallet);
+    } else {
+      sendToken(req.body, myWallet);
+      console.log("Response sent");
+      res.status(202).send("Not Modified");
     }
+  } catch (err) {
+    console.log("Error" + err);
+    res.status(500).send("Error");
+  }
 });
 
-app.listen(PORT, () =>
-    console.log(
-        `Local server running on PORT: ${PORT}!\nWelcome ${myWallet.name} to the ${blockchain.name} blockchain!`
-    )
-);
+app.post('/create', (req, res) => {
+  try {
+    let timestamp = new Date().getTime();
+    let block = req.body.transaction;
+    block.timestamp = timestamp;
+    let ranking = blockchain.wallets.length - blockchain.wallets[block.address1] + blockchain.wallets[block.address2];
+    block.ranking = ranking;
+    block.firstHash = Block.blockHash(block);
+    console.log("Creating Block: " + block.firstHash);
+    block.lastHash = block.firstHash;
+    blockchain.ledger[block.firstHash] = block;
+    fs.writeFile('./src/jsons/' + req.body.name + '.json', JSON.stringify(blockchain), 'utf8', (err) => {
+      if (err) console.log(err)
+      else console.log("Local Blockchain Updated!");
+    });
+    res.status(201).send("Success");
+  } catch (err) {
+    console.log("Error creating block " + err);
+    res.status(500).send("Error Updating File");
+  };
+  
 
+});
+
+//Receives request for a trade
+//If user available, alert the front end
+//Else, post a pending transaction to the ledger
+app.post('/trade', (req, res) => {
+  try {
+    
+  } catch (err) {
+
+  }
+
+});
+
+app.listen(PORT, () => console.log(`Local server running on PORT: ${PORT}!\nWelcome ${myWallet.name} to the ${blockchain.name} blockchain!`));
+
+//Sends the current blockchain to the next available user
 sendToken = (_blockchain, _wallet) => {
     console.log("Sending block to " + _wallet.next + "...");
     try {
@@ -151,5 +110,49 @@ sendToken = (_blockchain, _wallet) => {
         console.log(err);
     }
 };
+checkPending = (_ledger) => {
+  let ret = [];
+  for (transaction in _ledger) {
+    if (_ledger[transaction].isPending)
+      ret.push(_ledger[transaction]);
+  };
+  console.log(ret.length);
+  return ret;
+};
+
+checkIfItsMine = (_pending) => {
+  let ret = [];
+  for (transaction in _pending) {
+    if(_pending[transaction].address2 == PORT)
+      ret.push(_pending[transaction]);
+  };
+  console.log(ret.length);
+  return ret;
+}
+
+validateTransaction = (transaction) => {
+  console.log("Validating transaction: " + transaction.firstHash);
+  if (Block.mineBlock(transaction)) {
+    console.log("Block Validated");
+    transaction.currentRank = transaction.currentRank + (blockchain.wallets.length - myWallet.ranking);
+    let newHash = Block.blockHash(transaction);
+    transaction.lastHash = newHash;
+
+    if (transaction.currentRank >= transaction.ranking) {
+      transaction.isComplete = true;
+      blockchain.ledger[transaction.firstHash] = transaction;
+      //Update wallets
+    }
+    fs.writeFile('./src/jsons/' + blockchain.name + '.json', JSON.stringify(blockchain), 'utf8', (err) => {
+      if (err) console.log(err)
+      else console.log("Local Blockchain Updated!");
+    });
+    console.log("File written!");
+  } else {
+    delete blockchain.ledger[transaction];
+    console.log("Invalid Transaction! Deleted from Blockchain");
+  }
+};
+
 
 //TODO Need a sign up function to take the private address in order to accept the PORT
