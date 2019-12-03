@@ -1,7 +1,17 @@
 {
     "genesis_block": "1923i0jaasodj2",
     "ruleset": {},
-    "ledger": [],
+    "ledger": [
+        {
+            "from": "3004",
+            "to": "3003",
+            "offer": "Pikachu",
+            "recieve": "Charizard",
+            "message": "Hi!",
+            "isPending": true,
+            "isVerified": false
+        }
+    ],
     "wallets": [
         {
             "name": "Andres",

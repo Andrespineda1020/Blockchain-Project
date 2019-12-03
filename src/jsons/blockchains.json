@@ -1,6 +1,6 @@
 {
     "genesis_block": "3000",
-    "ruleset": {"isManager": true},
+    "ruleset": { "isManager": true },
     "ledger": [],
     "hasNewTransaction": false,
     "name": "Manager",
@@ -35,8 +35,7 @@
             "address": 3002,
             "next": 3003,
             "public_key": "aisjdoasidj",
-            "collectibles": 
-            [
+            "collectibles": [
                 {
                     "name": "Pokemon"
                 },
@@ -52,8 +51,7 @@
             "address": 3003,
             "next": 3004,
             "public_key": "AKISHD9aYD",
-            "collectibles": 
-            [
+            "collectibles": [
                 {
                     "name": "Pokemon"
                 },
@@ -69,8 +67,7 @@
             "address": "3004",
             "next": "3000",
             "public_key": "ALKSIDJ*(QWUE(*@Q",
-            "collectibles": 
-            [
+            "collectibles": [
                 {
                     "name": "Pokemon"
                 },
@@ -86,4 +83,3 @@
         }
     }
 }
-

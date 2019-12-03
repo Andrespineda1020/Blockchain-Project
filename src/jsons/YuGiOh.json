@@ -1,14 +1,28 @@
 {
     "genesis_block": "1923i0jaasodj2",
     "ruleset": {},
-    "ledger": [],
+    "ledger": [
+        {
+            "from": "3000",
+            "to": "3003",
+            "offer": "Karibo",
+            "recieve": "Harpie Lady",
+            "message": "Hi!",
+            "isPending": true,
+            "isVerified": false
+        }
+    ],
     "wallets": [
         {
             "name": "Andres",
             "address": "asiojdoi2a",
             "next": "aosd039ad",
             "public_key": "aisjdoasidj",
-            "collectibles": ["Blue Eyes White Dragon", "Blue Eyes White Dragon", "Blue Eyes White Dragon"],
+            "collectibles": [
+                "Blue Eyes White Dragon",
+                "Blue Eyes White Dragon",
+                "Blue Eyes White Dragon"
+            ],
             "ranking": 1,
             "is_online": true
         },
