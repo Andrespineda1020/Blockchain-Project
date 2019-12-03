@@ -1,7 +1,38 @@
 {
+    "name": "Pokemon",
     "genesis_block": "1923i0jaasodj2",
     "ruleset": {},
-    "ledger": [],
+    "ledger": {
+        "pAOSJDQ()DJ": {
+            "address1": "3000",
+            "address2": "3002",
+            "public_key1": "1923i0jaasodj2",
+            "public_key2": "aisjdoasidj",
+            "user1_value": "Charizard",
+            "ranking": 4,
+            "currentRank": 4,
+            "user2_value": null,
+            "isPending": false,
+            "isComplete": true,
+            "firstHash": "pAOSJDQ()DJ",
+            "lastHash": "IASJD)QW(Das0d"
+        },
+        "APSODkw0aka-a0": {
+            "address1": "3000",
+            "address2": "3002",
+            "public_key1": "1923i0jaasodj2",
+            "public_key2": "aisjdoasidj",
+            "user1_value": "Snorlax",
+            "ranking": 4,
+            "currentRank": 0,
+            "user2_value": null,
+            "isPending": true,
+            "isComplete": false,
+            "firstHash": "APSODkw0aka-a0",
+            "lastHash": "IASJD)QW(Das0d"
+        }
+
+    },
     "wallets": [
         {
             "name": "Andres",
