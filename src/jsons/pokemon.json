@@ -8,7 +8,7 @@
             "address2": "3002",
             "public_key1": "1923i0jaasodj2",
             "public_key2": "aisjdoasidj",
-            "user1_value": "Charizard",
+            "user1_value": "Mew",
             "ranking": 4,
             "currentRank": 4,
             "user2_value": null,
@@ -22,7 +22,7 @@
             "address2": "3002",
             "public_key1": "1923i0jaasodj2",
             "public_key2": "aisjdoasidj",
-            "user1_value": "Snorlax",
+            "user1_value": "Batman",
             "ranking": 4,
             "currentRank": 0,
             "user2_value": null,
@@ -31,9 +31,19 @@
             "firstHash": "APSODkw0aka-a0",
             "lastHash": "IASJD)QW(Das0d"
         }
-
     },
-    "wallets": [
+    "wallets": {
+        "3000": 
+        {
+            "name": "Genesis",
+            "address": "3000",
+            "next": "3002",
+            "public_key": "aisjdoasidj",
+            "collectibles": ["Mew", "Batman"],
+            "ranking": 1,
+            "is_online": true
+        },
+        "3002":
         {
             "name": "Andres",
             "address": "3002",
@@ -43,7 +53,7 @@
             "ranking": 1,
             "is_online": true
         },
-        {
+        "3003": {
             "name": "Luccas",
             "address": "3003",
             "next": "3004",
@@ -52,14 +62,14 @@
             "ranking": 1,
             "is_online": true
         },
-        {
+        "3004": {
             "name": "Matthew",
             "address": "3004",
-            "next": "3002",
+            "next": "3000",
             "public_key": "ALKSIDJ*(QWUE(*@Q",
             "collectibles": ["Pikachu"],
             "ranking": 1,
             "is_online": true
         }
-    ]
+    }
 }

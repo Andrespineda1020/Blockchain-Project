@@ -21,29 +21,58 @@ app.get('/', (req, res) => res.send(req.body));
 app.post('/receive', (req, res) => {
   console.log("Receiving block...");
   try {
-    if (req.body.hasNewTransaction) {
+    if (Object.keys(req.body.ledger).length != Object.keys(blockchain.ledger).length) {
       console.log("Processing block...");
       //Does stuff
       let pending = checkPending(req.body.ledger);
-      let myTransactions = checkIfItsMine(pending);
+      // let myTransactions = checkIfItsMine(pending);
       //If I have any transaction
-      if (myTransactions) {
-        fs.writeFile('../jsons/' + req.body.name, req.body);
-      } else {
+      if (pending.length > 0) {
+        console.log("Validating " + pending.length + " transactions");
         pending.forEach((transaction) => {
           validateTransaction(transaction);
         });
-      }
+        console.log("Writing pending transactions");
+        fs.writeFile('./src/jsons/' + req.body.name + '.json', JSON.stringify(req.body), 'utf8', (err) => {
+          if (err) console.log(err)
+          else console.log("Local Blockchain Updated!");
+        });
+      };
       res.status(201).send("Modified"); //TODO maybe add something else
+      sendToken(blockchain, myWallet);
     } else {
       sendToken(req.body, myWallet);
       console.log("Response sent");
       res.status(202).send("Not Modified");
     }
   } catch (err) {
-    console.log("Error");
+    console.log("Error" + err);
     res.status(500).send("Error");
   }
+});
+
+app.post('/create', (req, res) => {
+  try {
+    let timestamp = new Date().getTime();
+    let block = req.body.transaction;
+    block.timestamp = timestamp;
+    let ranking = blockchain.wallets.length - blockchain.wallets[block.address1] + blockchain.wallets[block.address2];
+    block.ranking = ranking;
+    block.firstHash = Block.blockHash(block);
+    console.log("Creating Block: " + block.firstHash);
+    block.lastHash = block.firstHash;
+    blockchain.ledger[block.firstHash] = block;
+    fs.writeFile('./src/jsons/' + req.body.name + '.json', JSON.stringify(blockchain), 'utf8', (err) => {
+      if (err) console.log(err)
+      else console.log("Local Blockchain Updated!");
+    });
+    res.status(201).send("Success");
+  } catch (err) {
+    console.log("Error creating block " + err);
+    res.status(500).send("Error Updating File");
+  };
+  
+
 });
 
 //Receives request for a trade
@@ -83,30 +112,30 @@ sendToken = (_blockchain, _wallet) => {
 
 checkPending = (_ledger) => {
   let ret = [];
-
-  _ledger.forEach((transaction) => {
-    if (transaction.isPending)
-      ret.push(transaction);
-  });
-
+  for (transaction in _ledger) {
+    if (_ledger[transaction].isPending)
+      ret.push(_ledger[transaction]);
+  };
+  console.log(ret.length);
   return ret;
 };
 
 checkIfItsMine = (_pending) => {
   let ret = [];
-
-  _pending.forEach((transaction) => {
-    if(transaction.address2 == PORT)
-      ret.push(transaction);
-  });
-
+  for (transaction in _pending) {
+    if(_pending[transaction].address2 == PORT)
+      ret.push(_pending[transaction]);
+  };
+  console.log(ret.length);
   return ret;
 }
 
 validateTransaction = (transaction) => {
+  console.log("Validating transaction: " + transaction.firstHash);
   if (Block.mineBlock(transaction)) {
-    transaction.currentRank = transaction.currentRank + (blockchain.wallet.length - myWallet.ranking);
-    let newHash = Block.hash(transaction);
+    console.log("Block Validated");
+    transaction.currentRank = transaction.currentRank + (blockchain.wallets.length - myWallet.ranking);
+    let newHash = Block.blockHash(transaction);
     transaction.lastHash = newHash;
 
     if (transaction.currentRank >= transaction.ranking) {
@@ -114,9 +143,14 @@ validateTransaction = (transaction) => {
       blockchain.ledger[transaction.firstHash] = transaction;
       //Update wallets
     }
-    fs.writeFile('../jsons/blockchains.json', blockchain);
+    fs.writeFile('./src/jsons/' + blockchain.name + '.json', JSON.stringify(blockchain), 'utf8', (err) => {
+      if (err) console.log(err)
+      else console.log("Local Blockchain Updated!");
+    });
+    console.log("File written!");
   } else {
     delete blockchain.ledger[transaction];
+    console.log("Invalid Transaction! Deleted from Blockchain");
   }
 };
 

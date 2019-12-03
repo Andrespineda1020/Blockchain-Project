@@ -47,7 +47,7 @@ class Block{
      */
 
     static mineBlock(Block){
-        let hash = Block.blockhash(Block);
+        let hash = this.blockHash(Block);
         if (hash == Block.lastHash)
           return true;
     return false;
@@ -57,8 +57,8 @@ class Block{
      * function to create the hash value of the block data
      */
 
-    static hash(timestamp,address1, address2,publicKey1, publicKey2, value1, value2){
-        return ChainUtil.hash(`${timestamp}${address1}${address2}${publicKey1}${publicKey2}${value1}${value2}`).toString();
+    static hash(timestamp,address1, address2,public_key1, public_key2, user1_value, user2_value2,ranking,curent_rank,isPending,isComplete){
+        return ChainUtil.hash(`${timestamp}${address1}${address2}${public_key1}${public_key2}${user1_value}${user2_value2}${ranking}${curent_rank}${isPending}${isComplete}`).toString();
     }
 
     /**
@@ -67,8 +67,8 @@ class Block{
 
     static blockHash(block){
         //destructuring
-        const {timestamp,address1, address2,publicKey1, publicKey2, value1, value2 } = block;
-        return Block.hash(timestamp,address1, address2,publicKey1, publicKey2, value1, value2);
+        const {timestamp,address1, address2,public_key1, public_key2, user1_value, user2_value2,ranking,curent_rank,isPending,isComplete } = block;
+        return Block.hash(timestamp,address1, address2,public_key1, public_key2, user1_value, user2_value2,ranking,curent_rank,isPending,isComplete);
     }
 
 }
