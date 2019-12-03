@@ -8,6 +8,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/Inbox";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NestedList from "./NestedList.js";
+import Trades from "./Trades.js";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -20,15 +21,11 @@ const useStyles = makeStyles(theme => ({
 export default function SimpleList() {
     const classes = useStyles();
 
-    let blockName = "Pokemon";
-
-    const listOfBlockchains = blockchains.wallets[blockchains.genesis_block].collectibles.map(instance => {
+    const listOfBlockchains = blockchains.wallets[
+        blockchains.genesis_block
+    ].collectibles.map(instance => {
         return (
-            <ListItem
-                button
-                component={Link}
-                to={`/chain/${instance.name}`}
-            >
+            <ListItem button component={Link} to={`/chain/${instance.name}`}>
                 <ListItemIcon>
                     <InboxIcon />
                 </ListItemIcon>
@@ -45,7 +42,8 @@ export default function SimpleList() {
                 </List>
                 <Switch>
                     <Route exact path="/chain/:instance">
-                        <NestedList blockchain={blockName} />
+                        <Trades />
+                        <NestedList />
                     </Route>
                 </Switch>
             </Router>
