@@ -10,8 +10,13 @@ const MAX_PORT = 4000;
 const address = 'http://localhost:';
 const PORT = process.env.PORT || config.address || MIN_PORT;
 const Block = require('./structure/Block');
-let blockchain = require('../jsons/blockchains.json');
+let blockchain = require('../jsons/Manager.json');
+
 let myWallet = blockchain.wallets[PORT];
+let chainList = {};
+for (let i = 0; i < myWallet.collectibles.length; i++) {
+  chainList[myWallet.collectibles[i]] = require('../jsons/' + myWallet.collectibles[i] + '.json');
+}
 
 app.use(bodyParser.json());
 
@@ -19,13 +24,14 @@ app.get('/', (req, res) => res.send(req.body));
 
 //Receive the current "Token" with the Blockchain Info
 app.post('/receive', (req, res) => {
-  console.log("Receiving block...");
+  let name = req.body.name;
+  console.log("Receiving token from " + name);
+  
   try {
-    if (Object.keys(req.body.ledger).length != Object.keys(blockchain.ledger).length) {
+    if (Object.keys(req.body.ledger).length != Object.keys(chainList[name].ledger).length) {
       console.log("Processing block...");
       //Does stuff
       let pending = checkPending(req.body.ledger);
-      // let myTransactions = checkIfItsMine(pending);
       //If I have any transaction
       if (pending.length > 0) {
         console.log("Validating " + pending.length + " transactions");
@@ -39,7 +45,7 @@ app.post('/receive', (req, res) => {
         });
       };
       res.status(201).send("Modified"); //TODO maybe add something else
-      sendToken(blockchain, myWallet);
+      sendToken(chainList[name], myWallet);
     } else {
       sendToken(req.body, myWallet);
       console.log("Response sent");
