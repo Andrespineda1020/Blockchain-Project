@@ -97,7 +97,7 @@ app.post('/update', (req, res) => {
     console.log(req.body.isApproved ? "Approving" : "Rejecting" + " transaction number " + req.body.transactionID);
     if (req.body.isApproved) {
       chainList[name].ledger[req.body.transactionID].isPending = false;
-      
+
     } else {
       delete chainList[name].ledger[req.body.transactionID];
     }
@@ -158,7 +158,7 @@ validateTransaction = (transaction, name) => {
   console.log("Validating transaction: " + transaction.firstHash);
   if (Block.mineBlock(transaction)) {
     console.log("Block Validated");
-    transaction.currentRank = transaction.currentRank + (chainList[name].wallets.length - myWallet.ranking);
+    // transaction.currentRank = transaction.currentRank + (chainList[name].wallets.length - myWallet.ranking);
     let newHash = Block.blockHash(transaction);
     transaction.lastHash = newHash;
 
