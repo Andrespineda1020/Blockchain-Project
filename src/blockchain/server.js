@@ -36,7 +36,7 @@ app.post('/receive', (req, res) => {
       if (pending.length > 0) {
         console.log("Validating " + pending.length + " transactions");
         pending.forEach((transaction) => {
-          validateTransaction(transaction);
+          validateTransaction(transaction, name);
         });
         console.log("Writing pending transactions");
         fs.writeFile('./src/jsons/' + req.body.name + '.json', JSON.stringify(req.body), 'utf8', (err) => {
@@ -46,6 +46,12 @@ app.post('/receive', (req, res) => {
       };
       res.status(201).send("Modified"); //TODO maybe add something else
       sendToken(chainList[name], myWallet);
+    } else if(req.body.ledger.length > chainList[name].ledger.length) {
+        console.log("Updating local " + name + " blockchain");
+        for (newTransaction in req.body.ledger) {
+          if (!chainList[name].ledger[newTransaction])
+            validateTransaction(newTransaction, name);
+        }
     } else {
       sendToken(req.body, myWallet);
       console.log("Response sent");
@@ -59,16 +65,17 @@ app.post('/receive', (req, res) => {
 
 app.post('/create', (req, res) => {
   try {
+    let name = req.body.name;
     let timestamp = new Date().getTime();
     let block = req.body.transaction;
     block.timestamp = timestamp;
-    let ranking = blockchain.wallets.length - blockchain.wallets[block.address1] + blockchain.wallets[block.address2];
+    let ranking = chainList[name].wallets.length - chainList[name].wallets[block.address1] + chainList[name].wallets[block.address2];
     block.ranking = ranking;
     block.firstHash = Block.blockHash(block);
     console.log("Creating Block: " + block.firstHash);
     block.lastHash = block.firstHash;
-    blockchain.ledger[block.firstHash] = block;
-    fs.writeFile('./src/jsons/' + req.body.name + '.json', JSON.stringify(blockchain), 'utf8', (err) => {
+    chainList[name].ledger[block.firstHash] = block;
+    fs.writeFile('./src/jsons/' + req.body.name + '.json', JSON.stringify(chainList[name]), 'utf8', (err) => {
       if (err) console.log(err)
       else console.log("Local Blockchain Updated!");
     });
@@ -84,11 +91,22 @@ app.post('/create', (req, res) => {
 //Receives request for a trade
 //If user available, alert the front end
 //Else, post a pending transaction to the ledger
-app.post('/trade', (req, res) => {
+app.post('/update', (req, res) => {
   try {
-    
+    let name = req.body.name
+    console.log(req.body.isApproved ? "Approving" : "Rejecting" + " transaction number " + req.body.transactionID);
+    if (req.body.isApproved) {
+      chainList[name].ledger[req.body.transactionID].isPending = false;
+      
+    } else {
+      delete chainList[name].ledger[req.body.transactionID];
+    }
+    fs.writeFile('./src/jsons/' + name + '.json', JSON.stringify(chainList[name]), 'utf8', (err) => {
+      if (err) console.log(err)
+      else console.log("Local Blockchain Updated!");
+    });
   } catch (err) {
-
+      console.log("Error Modifying Transaction: " + err);
   }
 
 });
@@ -136,29 +154,37 @@ checkIfItsMine = (_pending) => {
   return ret;
 }
 
-validateTransaction = (transaction) => {
+validateTransaction = (transaction, name) => {
   console.log("Validating transaction: " + transaction.firstHash);
   if (Block.mineBlock(transaction)) {
     console.log("Block Validated");
-    transaction.currentRank = transaction.currentRank + (blockchain.wallets.length - myWallet.ranking);
+    transaction.currentRank = transaction.currentRank + (chainList[name].wallets.length - myWallet.ranking);
     let newHash = Block.blockHash(transaction);
     transaction.lastHash = newHash;
 
     if (transaction.currentRank >= transaction.ranking) {
       transaction.isComplete = true;
-      blockchain.ledger[transaction.firstHash] = transaction;
+      chainList[name].ledger[transaction.firstHash] = transaction;
       //Update wallets
+      chainList[name].wallets[transaction.address1].collectibles.push(transaction.user2_value);
+      chainList[name].wallets[transaction.address2].collectibles.push(transaction.user1_value);
+      chainList[name].wallets[transaction.address1].splice(transaction.user1_value);
+      chainList[name].wallets[transaction/address2].splice(transaction.user2_value);
     }
-    fs.writeFile('./src/jsons/' + blockchain.name + '.json', JSON.stringify(blockchain), 'utf8', (err) => {
+    fs.writeFile('./src/jsons/' + name + '.json', JSON.stringify(chainList[name]), 'utf8', (err) => {
       if (err) console.log(err)
       else console.log("Local Blockchain Updated!");
     });
     console.log("File written!");
   } else {
-    delete blockchain.ledger[transaction];
+    delete chainList[name].ledger[transaction];
     console.log("Invalid Transaction! Deleted from Blockchain");
   }
 };
+
+updateWallet = (transaction, name) => {
+
+}
 
 
 //TODO Need a sign up function to take the private address in order to accept the PORT
