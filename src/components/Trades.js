@@ -11,11 +11,6 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import StarBorder from "@material-ui/icons/StarBorder";
 import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -61,17 +56,14 @@ export default function Blockchain() {
     //     return console.log("sent");
     // }
 
-    const approveTrade = () => {
-        // change isAccepted to true
-        // currentBlockchain.ledger.isPending;
-    };
-
-    const updateBackEndJson = file => {
-        axios.post("localhost:" + myPort.address + "/update", file);
-    };
-
-    const rejectTrade = () => {
-        // delete entry from ledger
+    const handleTrade = (id, approval) => {
+        axios
+            .post("localhost:" + myPort.address + "/update", {
+                isApproved: approval,
+                transactionID: id,
+                name: instance
+            })
+            .then(setOpen(open));
     };
 
     const pendingTradeUsers = Object.keys(currentBlockchain.ledger).map(
@@ -120,14 +112,28 @@ export default function Blockchain() {
                                         <Button
                                             variant="contained"
                                             color="primary"
-                                            onClick={approveTrade}
+                                            onClick={() => {
+                                                handleTrade(
+                                                    currentBlockchain.ledger[
+                                                        transaction
+                                                    ].firstHash,
+                                                    true
+                                                );
+                                            }}
                                         >
                                             Approve
                                         </Button>
                                         <Button
                                             variant="contained"
                                             color="secondary"
-                                            onClick={rejectTrade}
+                                            onClick={() => {
+                                                handleTrade(
+                                                    currentBlockchain.ledger[
+                                                        transaction
+                                                    ].firstHash,
+                                                    false
+                                                );
+                                            }}
                                         >
                                             Reject
                                         </Button>
