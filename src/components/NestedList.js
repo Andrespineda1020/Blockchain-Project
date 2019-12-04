@@ -73,7 +73,7 @@ export default function Blockchain() {
     function onSendMessage() {
         if (myTradePokemon != "") handleTrade();
         axios
-            .post("https://localhost:" + myPort + "/create", {
+            .post("http://localhost:" + myPort + "/create", {
                 name: instance,
                 transaction: {
                     address1: myPort,
