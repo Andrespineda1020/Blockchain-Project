@@ -34,7 +34,6 @@ export default function Blockchain() {
     const { instance } = useParams();
 
     let currentBlockchain = require("../jsons/" + instance + ".json");
-    let blockchains = require("../jsons/blockchains.json");
     let myPort = require("../jsons/myconfig.json");
 
     const classes = useStyles();
@@ -75,92 +74,73 @@ export default function Blockchain() {
         // delete entry from ledger
     };
 
-    const pendingTradeUsers = currentBlockchain.ledger.map(transaction => {
-        if (transaction.to == myPort.address && transaction.isPending) {
-            return (
-                <div>
-                    <ListItem button onClick={handleOpen}>
-                        <ListItemIcon>
-                            <SendIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary={blockchains.wallets[transaction.from].name}
-                        />
-                        {open ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <div>
-                                <ListItem button className={classes.nested}>
-                                    <ListItemIcon>
-                                        <StarBorder />
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        primary={
-                                            "Trade your " +
-                                            transaction.recieve +
-                                            " for a " +
-                                            transaction.offer +
-                                            "!"
-                                        }
-                                    />
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={approveTrade}
-                                    >
-                                        Approve
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={rejectTrade}
-                                    >
-                                        Reject
-                                    </Button>
-                                    {/* <Dialog
-                                        open={trade}
-                                        onClose={handleTrade}
-                                        aria-labelledby="form-dialog-title"
-                                    >
-                                        <DialogTitle id="form-dialog-title">
-                                            Trade
-                                        </DialogTitle>
-                                        <DialogContent>
-                                            Send a message along with your trade
-                                            request!
-                                            <TextField
-                                                autoFocus
-                                                margin="dense"
-                                                id="name"
-                                                label="Email Address"
-                                                type="email"
-                                                fullWidth
-                                            />
-                                        </DialogContent>
-                                        <DialogActions>
-                                            <Button
-                                                onClick={handleTrade}
-                                                color="primary"
-                                            >
-                                                Cancel
-                                            </Button>
-                                            <Button
-                                                onClick={onSendMessage}
-                                                color="primary"
-                                            >
-                                                Send Request
-                                            </Button>
-                                        </DialogActions>
-                                    </Dialog> */}
-                                </ListItem>
-                            </div>
-                        </List>
-                    </Collapse>
-                </div>
-            );
-        } else return "None!";
-    });
+    const pendingTradeUsers = Object.keys(currentBlockchain.ledger).map(
+        transaction => {
+            if (
+                currentBlockchain.ledger[transaction].address2 ==
+                    myPort.address &&
+                currentBlockchain.ledger[transaction].isPending
+            ) {
+                return (
+                    <div>
+                        <ListItem button onClick={handleOpen}>
+                            <ListItemIcon>
+                                <SendIcon />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary={
+                                    currentBlockchain.wallets[
+                                        currentBlockchain.ledger[transaction]
+                                            .address1
+                                    ].name
+                                }
+                            />
+                            {open ? <ExpandLess /> : <ExpandMore />}
+                        </ListItem>
+                        <Collapse in={open} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                <div>
+                                    <ListItem button className={classes.nested}>
+                                        <ListItemIcon>
+                                            <StarBorder />
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={
+                                                "Trade your " +
+                                                currentBlockchain.ledger[
+                                                    transaction
+                                                ].user2_value +
+                                                " for a " +
+                                                currentBlockchain.ledger[
+                                                    transaction
+                                                ].user1_value +
+                                                "!"
+                                            }
+                                        />
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={approveTrade}
+                                        >
+                                            Approve
+                                        </Button>
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={rejectTrade}
+                                        >
+                                            Reject
+                                        </Button>
+                                    </ListItem>
+                                </div>
+                            </List>
+                        </Collapse>
+                    </div>
+                );
+            } else if (Object.keys(currentBlockchain.ledger).isEmpty)
+                return "None";
+        }
+    );
 
     return (
         <List

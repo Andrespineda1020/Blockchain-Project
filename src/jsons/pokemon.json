@@ -5,7 +5,7 @@
     "ledger": {
         "pAOSJDQ()DJ": {
             "address1": "3000",
-            "address2": "3002",
+            "address2": "3003",
             "public_key1": "1923i0jaasodj2",
             "public_key2": "aisjdoasidj",
             "user1_value": "Mew",
@@ -18,6 +18,20 @@
             "lastHash": "IASJD)QW(Das0d"
         },
         "APSODkw0aka-a0": {
+            "address1": "3000",
+            "address2": "3003",
+            "public_key1": "1923i0jaasodj2",
+            "public_key2": "aisjdoasidj",
+            "user1_value": "ZuBatman",
+            "ranking": 4,
+            "currentRank": 0,
+            "user2_value": null,
+            "isPending": true,
+            "isComplete": false,
+            "firstHash": "APSODkw0aka-a0",
+            "lastHash": "IASJD)QW(Das0d"
+        },
+        "APSODkw0aka-a1": {
             "address1": "3000",
             "address2": "3002",
             "public_key1": "1923i0jaasodj2",
@@ -33,8 +47,7 @@
         }
     },
     "wallets": {
-        "3000": 
-        {
+        "3000": {
             "name": "Genesis",
             "address": "3000",
             "next": "3002",
@@ -43,8 +56,7 @@
             "ranking": 1,
             "is_online": true
         },
-        "3002":
-        {
+        "3002": {
             "name": "Andres",
             "address": "3002",
             "next": "3003",

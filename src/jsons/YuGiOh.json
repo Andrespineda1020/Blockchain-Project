@@ -1,48 +1,87 @@
 {
+    "name": "YuGiOh",
     "genesis_block": "1923i0jaasodj2",
     "ruleset": {},
-    "ledger": [
-        {
-            "from": "3000",
-            "to": "3003",
-            "offer": "Karibo",
-            "recieve": "Harpie Lady",
-            "message": "Hi!",
+    "ledger": {
+        "pAOSJDQ()DJ": {
+            "address1": "3000",
+            "address2": "3003",
+            "public_key1": "1923i0jaasodj2",
+            "public_key2": "aisjdoasidj",
+            "user1_value": "Mew",
+            "ranking": 4,
+            "currentRank": 4,
+            "user2_value": null,
+            "isPending": false,
+            "isComplete": true,
+            "firstHash": "pAOSJDQ()DJ",
+            "lastHash": "IASJD)QW(Das0d"
+        },
+        "APSODkw0aka-a0": {
+            "address1": "3000",
+            "address2": "3003",
+            "public_key1": "1923i0jaasodj2",
+            "public_key2": "aisjdoasidj",
+            "user1_value": "ZuBatman",
+            "ranking": 4,
+            "currentRank": 0,
+            "user2_value": null,
             "isPending": true,
-            "isVerified": false
+            "isComplete": false,
+            "firstHash": "APSODkw0aka-a0",
+            "lastHash": "IASJD)QW(Das0d"
+        },
+        "APSODkw0aka-a1": {
+            "address1": "3000",
+            "address2": "3002",
+            "public_key1": "1923i0jaasodj2",
+            "public_key2": "aisjdoasidj",
+            "user1_value": "Batman",
+            "ranking": 4,
+            "currentRank": 0,
+            "user2_value": null,
+            "isPending": true,
+            "isComplete": false,
+            "firstHash": "APSODkw0aka-a0",
+            "lastHash": "IASJD)QW(Das0d"
         }
-    ],
-    "wallets": [
-        {
-            "name": "Andres",
-            "address": "asiojdoi2a",
-            "next": "aosd039ad",
+    },
+    "wallets": {
+        "3000": {
+            "name": "Genesis",
+            "address": "3000",
+            "next": "3002",
             "public_key": "aisjdoasidj",
-            "collectibles": [
-                "Blue Eyes White Dragon",
-                "Blue Eyes White Dragon",
-                "Blue Eyes White Dragon"
-            ],
+            "collectibles": ["Kariboh", "Exodia"],
             "ranking": 1,
             "is_online": true
         },
-        {
+        "3002": {
+            "name": "Andres",
+            "address": "3002",
+            "next": "3003",
+            "public_key": "aisjdoasidj",
+            "collectibles": ["Red Eyes", "Blue Eyes"],
+            "ranking": 1,
+            "is_online": true
+        },
+        "3003": {
             "name": "Luccas",
-            "address": "sodju09asID",
-            "next": "APO(SUD09QWUE",
+            "address": "3003",
+            "next": "3004",
             "public_key": "AKISHD9aYD",
-            "collectibles": ["Exodia"],
+            "collectibles": ["YuGiOh1", "YuGiOh2"],
             "ranking": 1,
             "is_online": true
         },
-        {
+        "3004": {
             "name": "Matthew",
-            "address": "ASDU(Q*@UDA(",
-            "next": "APO(APOSDU09@UEQD",
+            "address": "3004",
+            "next": "3000",
             "public_key": "ALKSIDJ*(QWUE(*@Q",
-            "collectibles": ["Three Egyptian Gods"],
+            "collectibles": ["YuGiOh3"],
             "ranking": 1,
             "is_online": true
         }
-    ]
+    }
 }
