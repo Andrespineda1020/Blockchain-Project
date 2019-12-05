@@ -1,1 +1,73 @@
-{"name":"YuGiOh","genesis_block":"1923i0jaasodj2","ruleset":{},"ledger":{"adeff4c3d3825402add2cc82f606ce2a7ee2a559f306f77912ae3dc44e16a20b":{"address1":3003,"address2":"3005","public_key1":"AKISHD9aYD","public_key2":"JTFSK*(HSI(*@H","user1_value":"Harpie Lady","ranking":null,"current_rank":0,"user2_value":"Harpie Lady Sisters","isPending":true,"isComplete":false,"timestamp":1575525632481,"firstHash":"adeff4c3d3825402add2cc82f606ce2a7ee2a559f306f77912ae3dc44e16a20b","lastHash":"adeff4c3d3825402add2cc82f606ce2a7ee2a559f306f77912ae3dc44e16a20b"}},"wallets":{"3000":{"name":"Genesis","address":"3000","next":"3002","public_key":"aisjdoasidj","collectibles":["Kariboh","Skeletor"],"ranking":1,"is_online":true},"3002":{"name":"Andres","address":"3002","next":"3003","public_key":"aisjdoasidj","collectibles":["Blue Eyes White Dragon","Blue Eyes White Dragon","Blue Eyes White Dragon"],"ranking":1,"is_online":true},"3003":{"name":"Luccas","address":"3003","next":"3004","public_key":"AKISHD9aYD","collectibles":["Exodia","Harpie Lady"],"ranking":1,"is_online":true},"3004":{"name":"Matthew","address":"3004","next":"3005","public_key":"ALKSIDJ*(QWUE(*@Q","collectibles":["Ra","Slyther"],"ranking":1,"is_online":true},"3005":{"name":"Dr. Newman","address":"3005","next":"3000","public_key":"JTFSK*(HSI(*@H","collectibles":["Harpie Lady Sisters","Obelisk"],"ranking":1,"is_online":true}}}
+{
+    "name": "YuGiOh",
+    "genesis_block": "1923i0jaasodj2",
+    "ruleset": {},
+    "ledger": {
+        "adeff4c3d3825402add2cc82f606ce2a7ee2a559f306f77912ae3dc44e16a20b": {
+            "address1": 3003,
+            "address2": "3005",
+            "public_key1": "AKISHD9aYD",
+            "public_key2": "JTFSK*(HSI(*@H",
+            "user1_value": "Harpie Lady",
+            "ranking": null,
+            "current_rank": 0,
+            "user2_value": "Harpie Lady Sisters",
+            "isPending": true,
+            "isComplete": false,
+            "timestamp": 1575525632481,
+            "firstHash": "adeff4c3d3825402add2cc82f606ce2a7ee2a559f306f77912ae3dc44e16a20b",
+            "lastHash": "adeff4c3d3825402add2cc82f606ce2a7ee2a559f306f77912ae3dc44e16a20b"
+        }
+    },
+    "wallets": {
+        "3000": {
+            "name": "Genesis",
+            "address": "3000",
+            "next": "3002",
+            "public_key": "aisjdoasidj",
+            "collectibles": ["Kariboh", "Skeletor"],
+            "ranking": 1,
+            "is_online": true
+        },
+        "3002": {
+            "name": "Andres",
+            "address": "3002",
+            "next": "3003",
+            "public_key": "aisjdoasidj",
+            "collectibles": [
+                "Blue Eyes White Dragon",
+                "Blue Eyes White Dragon",
+                "Blue Eyes White Dragon"
+            ],
+            "ranking": 1,
+            "is_online": true
+        },
+        "3003": {
+            "name": "Luccas",
+            "address": "3003",
+            "next": "3004",
+            "public_key": "AKISHD9aYD",
+            "collectibles": ["Exodia", "Harpie Lady"],
+            "ranking": 1,
+            "is_online": true
+        },
+        "3004": {
+            "name": "Matthew",
+            "address": "3004",
+            "next": "3005",
+            "public_key": "ALKSIDJ*(QWUE(*@Q",
+            "collectibles": ["Ra", "Slyther"],
+            "ranking": 1,
+            "is_online": true
+        },
+        "3005": {
+            "name": "Dr. Newman",
+            "address": "3005",
+            "next": "3000",
+            "public_key": "JTFSK*(HSI(*@H",
+            "collectibles": ["Harpie Lady Sisters", "Obelisk"],
+            "ranking": 1,
+            "is_online": true
+        }
+    }
+}
