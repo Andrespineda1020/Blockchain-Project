@@ -2,18 +2,14 @@
     "name": "Pokemon",
     "genesis_block": "1923i0jaasodj2",
     "ruleset": {},
-    "ledger": {
-    },
+    "ledger": {},
     "wallets": {
         "3000": {
             "name": "Genesis",
             "address": "3000",
             "next": "3002",
             "public_key": "aisjdoasidj",
-            "collectibles": [
-                "Mew",
-                "Batman"
-            ],
+            "collectibles": ["Mew", "Pichu"],
             "ranking": 1,
             "is_online": true
         },
@@ -22,10 +18,7 @@
             "address": "3002",
             "next": "3003",
             "public_key": "aisjdoasidj",
-            "collectibles": [
-                "Charizard",
-                "Snorlax"
-            ],
+            "collectibles": ["Charizard", "Snorlax"],
             "ranking": 1,
             "is_online": true
         },
@@ -34,22 +27,26 @@
             "address": "3003",
             "next": "3004",
             "public_key": "AKISHD9aYD",
-            "collectibles": [
-                "Mewtwo",
-                "Missingno"
-            ],
-            "ranking": 1,
+            "collectibles": ["Mewtwo", "Missingno"],
+            "ranking": 2,
             "is_online": true
         },
         "3004": {
             "name": "Matthew",
             "address": "3004",
-            "next": "3000",
+            "next": "3005",
             "public_key": "ALKSIDJ*(QWUE(*@Q",
-            "collectibles": [
-                "Pikachu"
-            ],
-            "ranking": 1,
+            "collectibles": ["Pikachu"],
+            "ranking": 3,
+            "is_online": true
+        },
+        "3005": {
+            "name": "Dr. Newman",
+            "address": "3005",
+            "next": "3000",
+            "public_key": "JTFSK*(HSI(*@H",
+            "collectibles": ["Raichu", "Onyx"],
+            "ranking": 4,
             "is_online": true
         }
     }

@@ -122,15 +122,19 @@ export default function Blockchain() {
                                 <StarBorder />
                             </ListItemIcon>
                             <ListItemText primary={collectible} />
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={() => {
-                                    openTrade(collectible, user);
-                                }}
-                            >
-                                Trade
-                            </Button>
+                            {user != myPort ? (
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() => {
+                                        openTrade(collectible, user);
+                                    }}
+                                >
+                                    Trade
+                                </Button>
+                            ) : (
+                                <></>
+                            )}
                             <Dialog
                                 open={trade}
                                 onClose={handleTrade}

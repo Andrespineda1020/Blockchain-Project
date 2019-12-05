@@ -68,8 +68,6 @@ export default function Blockchain() {
 
     const pendingTradeUsers = Object.keys(currentBlockchain.ledger).map(
         transaction => {
-            // console.log(currentBlockchain.wallets);
-            console.log(currentBlockchain.ledger[transaction].address1);
             if (
                 currentBlockchain.ledger[transaction].address2 ==
                     myPort.address &&
@@ -104,7 +102,7 @@ export default function Blockchain() {
                                                 currentBlockchain.ledger[
                                                     transaction
                                                 ].user2_value +
-                                                " for a " +
+                                                " for my " +
                                                 currentBlockchain.ledger[
                                                     transaction
                                                 ].user1_value +
@@ -123,7 +121,7 @@ export default function Blockchain() {
                                                 );
                                             }}
                                         >
-                                            Approve
+                                            Accept
                                         </Button>
                                         <Button
                                             variant="contained"
@@ -137,7 +135,7 @@ export default function Blockchain() {
                                                 );
                                             }}
                                         >
-                                            Reject
+                                            Deny
                                         </Button>
                                     </ListItem>
                                 </div>

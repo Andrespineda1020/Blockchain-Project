@@ -9,6 +9,7 @@ import InboxIcon from "@material-ui/icons/Inbox";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NestedList from "./NestedList.js";
 import Trades from "./Trades.js";
+import Approval from "./Approval.js";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -42,6 +43,7 @@ export default function SimpleList() {
                 </List>
                 <Switch>
                     <Route exact path="/chain/:instance">
+                        {/* <Approval /> */}
                         <Trades />
                         <NestedList />
                     </Route>
