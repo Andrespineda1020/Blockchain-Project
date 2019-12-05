@@ -226,7 +226,7 @@ app.post("/create", (req, res) => {
         block.lastHash = block.firstHash;
         chainList[name].ledger[block.firstHash] = block;
         fs.writeFile(
-            "./src/jsons/" + req.body.name + ".json",
+            "../jsons/" + req.body.name + ".json",
             JSON.stringify(chainList[name]),
             "utf8",
             err => {
@@ -258,7 +258,7 @@ app.post("/update", (req, res) => {
             delete chainList[name].ledger[req.body.transactionID];
         }
         fs.writeFile(
-            "./src/jsons/" + name + ".json",
+            "../jsons/" + name + ".json",
             JSON.stringify(chainList[name]),
             "utf8",
             err => {

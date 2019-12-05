@@ -58,7 +58,7 @@ export default function Blockchain() {
 
     const handleTrade = (id, approval) => {
         axios
-            .post("localhost:" + myPort.address + "/update", {
+            .post("http://localhost:" + myPort.address + "/update", {
                 isApproved: approval,
                 transactionID: id,
                 name: instance

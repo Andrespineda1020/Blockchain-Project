@@ -1,22 +1,22 @@
 {
-    "name": "Pokemon",
+    "name": "YuGiOh",
     "genesis_block": "1923i0jaasodj2",
     "ruleset": {},
     "ledger": {
-        "42b8f8b5abaedbd1761e2fa90df009cd12d8fcf2845586b117a0c0f6e3330c39": {
-            "address1": "3003",
+        "adeff4c3d3825402add2cc82f606ce2a7ee2a559f306f77912ae3dc44e16a20b": {
+            "address1": 3003,
             "address2": "3005",
-            "public_key1": "1923i0jaasodj2",
-            "public_key2": "aisjdoasidj",
-            "user1_value": "Exodia",
-            "ranking": 0,
-            "currentRank": 0,
-            "user2_value": "Obelisk",
+            "public_key1": "AKISHD9aYD",
+            "public_key2": "JTFSK*(HSI(*@H",
+            "user1_value": "Harpie Lady",
+            "ranking": null,
+            "current_rank": 0,
+            "user2_value": "Harpie Lady Sisters",
             "isPending": true,
             "isComplete": false,
-            "timestamp": 1575515918365,
-            "firstHash": "42b8f8b5abaedbd1761e2fa90df009cd12d8fcf2845586b117a0c0f6e3330c39",
-            "lastHash": "42b8f8b5abaedbd1761e2fa90df009cd12d8fcf2845586b117a0c0f6e3330c39"
+            "timestamp": 1575525632481,
+            "firstHash": "adeff4c3d3825402add2cc82f606ce2a7ee2a559f306f77912ae3dc44e16a20b",
+            "lastHash": "adeff4c3d3825402add2cc82f606ce2a7ee2a559f306f77912ae3dc44e16a20b"
         }
     },
     "wallets": {

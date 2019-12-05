@@ -1,52 +1,52 @@
 {
-    "name": "Digimon",
+    "name": "Pokemon",
     "genesis_block": "1923i0jaasodj2",
     "ruleset": {},
     "ledger": {
-        "3ff1504252ecd468cb57a009d19b5aebae20f55d3a6593d21a87f5af08a3a648": {
+        "470f9c0574251824e758b211c3b218433d029db41f49f60f37dd0e4cd0087b43": {
             "address1": 3003,
             "address2": "3002",
             "public_key1": "AKISHD9aYD",
             "public_key2": "aisjdoasidj",
-            "user1_value": "Digimon",
+            "user1_value": "Missingno",
             "ranking": null,
             "current_rank": 0,
-            "user2_value": "Dragomon",
+            "user2_value": "Charizard",
             "isPending": true,
             "isComplete": false,
-            "timestamp": 1575525642682,
-            "firstHash": "3ff1504252ecd468cb57a009d19b5aebae20f55d3a6593d21a87f5af08a3a648",
-            "lastHash": "3ff1504252ecd468cb57a009d19b5aebae20f55d3a6593d21a87f5af08a3a648"
+            "timestamp": 1575523109133,
+            "firstHash": "470f9c0574251824e758b211c3b218433d029db41f49f60f37dd0e4cd0087b43",
+            "lastHash": "470f9c0574251824e758b211c3b218433d029db41f49f60f37dd0e4cd0087b43"
         },
-        "5ac4dc8460d4c7827483f4c44a2efa7e9347b422e9a16d6774ff9bc41433290b": {
-            "address1": 3003,
-            "address2": "3000",
-            "public_key1": "AKISHD9aYD",
-            "public_key2": "aisjdoasidj",
-            "user1_value": "Mewtwomon",
+        "a5c4c7bc6b63cef9fd070f12a8fd7daf9b8fdde533a3a3f40350366838a82b14": {
+            "address1": 3002,
+            "address2": "3003",
+            "public_key1": "aisjdoasidj",
+            "public_key2": "AKISHD9aYD",
+            "user1_value": "Snorlax",
             "ranking": null,
             "current_rank": 0,
-            "user2_value": "Yellomon",
+            "user2_value": "Mewtwo",
             "isPending": true,
             "isComplete": false,
-            "timestamp": 1575525707167,
-            "firstHash": "5ac4dc8460d4c7827483f4c44a2efa7e9347b422e9a16d6774ff9bc41433290b",
-            "lastHash": "5ac4dc8460d4c7827483f4c44a2efa7e9347b422e9a16d6774ff9bc41433290b"
+            "timestamp": 1575524950662,
+            "firstHash": "a5c4c7bc6b63cef9fd070f12a8fd7daf9b8fdde533a3a3f40350366838a82b14",
+            "lastHash": "a5c4c7bc6b63cef9fd070f12a8fd7daf9b8fdde533a3a3f40350366838a82b14"
         },
-        "153c6fe60b7d1681232723b790a876e1011a7611034ed6d4723b9ed816222ff9": {
-            "address1": 3003,
+        "cb526ecb5cb5c0b4cc3743230916c981825f331e816d76e28d3bf4fa8a09b87e": {
+            "address1": 3002,
             "address2": "3005",
-            "public_key1": "AKISHD9aYD",
-            "public_key2": "ALKSIDJ*(QWUE(*@Q",
-            "user1_value": "Digimon",
+            "public_key1": "aisjdoasidj",
+            "public_key2": "JTFSK*(HSI(*@H",
+            "user1_value": "Charizard",
             "ranking": null,
             "current_rank": 0,
-            "user2_value": "Nemon",
+            "user2_value": "Raichu",
             "isPending": true,
             "isComplete": false,
-            "timestamp": 1575525726545,
-            "firstHash": "153c6fe60b7d1681232723b790a876e1011a7611034ed6d4723b9ed816222ff9",
-            "lastHash": "153c6fe60b7d1681232723b790a876e1011a7611034ed6d4723b9ed816222ff9"
+            "timestamp": 1575525018051,
+            "firstHash": "cb526ecb5cb5c0b4cc3743230916c981825f331e816d76e28d3bf4fa8a09b87e",
+            "lastHash": "cb526ecb5cb5c0b4cc3743230916c981825f331e816d76e28d3bf4fa8a09b87e"
         }
     },
     "wallets": {
@@ -55,7 +55,7 @@
             "address": "3000",
             "next": "3002",
             "public_key": "aisjdoasidj",
-            "collectibles": ["Birdmon", "Yellomon"],
+            "collectibles": ["Mew", "Pichu"],
             "ranking": 0,
             "is_online": true
         },
@@ -64,7 +64,7 @@
             "address": "3002",
             "next": "3003",
             "public_key": "aisjdoasidj",
-            "collectibles": ["Dragomon"],
+            "collectibles": ["Charizard", "Snorlax"],
             "ranking": 1,
             "is_online": true
         },
@@ -73,7 +73,7 @@
             "address": "3003",
             "next": "3004",
             "public_key": "AKISHD9aYD",
-            "collectibles": ["Mewtwomon", "Digimon"],
+            "collectibles": ["Mewtwo", "Missingno"],
             "ranking": 2,
             "is_online": true
         },
@@ -82,7 +82,7 @@
             "address": "3004",
             "next": "3005",
             "public_key": "ALKSIDJ*(QWUE(*@Q",
-            "collectibles": ["Koromon"],
+            "collectibles": ["Pikachu"],
             "ranking": 3,
             "is_online": true
         },
@@ -90,8 +90,8 @@
             "name": "Dr. Newman",
             "address": "3005",
             "next": "3000",
-            "public_key": "ALKSIDJ*(QWUE(*@Q",
-            "collectibles": ["Nemon"],
+            "public_key": "JTFSK*(HSI(*@H",
+            "collectibles": ["Raichu", "Onyx"],
             "ranking": 4,
             "is_online": true
         }
