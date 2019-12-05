@@ -1,10 +1,27 @@
 {
     "name": "Manager",
-    "genesis_block": "3000",
+    "genesis_block": 3000,
+    "last_block": 3004,
     "ruleset": {
         "isManager": true
     },
-    "ledger": {},
+    "ledger": {
+        "49631e3ff84932455cde8003e8f7f69c8cb369dd5134b907eff475ed66019653": {
+            "address1": "3000",
+            "address2": "3003",
+            "public_key1": "1923i0jaasodj2",
+            "public_key2": "aisjdoasidj",
+            "user1_value": "Marvel",
+            "ranking": 0,
+            "currentRank": 0,
+            "user2_value": null,
+            "isPending": false,
+            "isComplete": false,
+            "timestamp": 1575512079817,
+            "firstHash": "49631e3ff84932455cde8003e8f7f69c8cb369dd5134b907eff475ed66019653",
+            "lastHash": "49631e3ff84932455cde8003e8f7f69c8cb369dd5134b907eff475ed66019653"
+        }
+    },
     "hasNewTransaction": false,
     "wallets": {
         "3000": {
@@ -12,7 +29,23 @@
             "address": 3000,
             "next": 3002,
             "public_key": "ASJDQAJOSD",
-            "collectibles": ["Pokemon", "Digimon", "YuGiOh"],
+            "collectibles": [
+                {
+                    "name": "Pokemon",
+                    "first": 3000,
+                    "last": 3004
+                },
+                {
+                    "name": "Digimon",
+                    "first": 3000,
+                    "last": 3004
+                },
+                {
+                    "name": "YuGiOh",
+                    "first": 3000,
+                    "last": 3004
+                }
+            ],
             "ranking": 0
         },
         "3002": {

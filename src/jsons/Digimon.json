@@ -1,34 +1,55 @@
 {
+    "name": "Digimon",
     "genesis_block": "1923i0jaasodj2",
     "ruleset": {},
-    "ledger": [],
-    "wallets": [
-        {
-            "name": "Andres",
-            "address": "asiojdoi2a",
-            "next": "aosd039ad",
+    "ledger": {
+    },
+    "wallets": {
+        "3000": {
+            "name": "Genesis",
+            "address": "3000",
+            "next": "3002",
             "public_key": "aisjdoasidj",
-            "collectibles": ["Koromon", "Suckamon"],
+            "collectibles": [
+                "Putamon",
+                "Yellomon"
+            ],
             "ranking": 1,
             "is_online": true
         },
-        {
+        "3002": {
+            "name": "Andres",
+            "address": "3002",
+            "next": "3003",
+            "public_key": "aisjdoasidj",
+            "collectibles": [
+                "Dragomon"
+            ],
+            "ranking": 1,
+            "is_online": true
+        },
+        "3003": {
             "name": "Luccas",
-            "address": "sodju09asID",
-            "next": "APO(SUD09QWUE",
+            "address": "3003",
+            "next": "3004",
             "public_key": "AKISHD9aYD",
-            "collectibles": ["Dragonmon", "SuperMechaAndromon"],
+            "collectibles": [
+                "Mewtwomon",
+                "Digimon"
+            ],
             "ranking": 1,
             "is_online": true
         },
-        {
+        "3004": {
             "name": "Matthew",
-            "address": "ASDU(Q*@UDA(",
-            "next": "APO(APOSDU09@UEQD",
+            "address": "3004",
+            "next": "3000",
             "public_key": "ALKSIDJ*(QWUE(*@Q",
-            "collectibles": ["Myotismon"],
+            "collectibles": [
+                "Koromon"
+            ],
             "ranking": 1,
             "is_online": true
         }
-    ]
+    }
 }
