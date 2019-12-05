@@ -1,0 +1,60 @@
+{
+    "name": "Manager",
+    "genesis_block": 3000,
+    "last_block": 3004,
+    "ruleset": {
+        "isManager": true
+    },
+    "ledger": {},
+    "hasNewTransaction": false,
+    "wallets": {
+        "3000": {
+            "name": "Genesis",
+            "address": 3000,
+            "next": 3002,
+            "public_key": "ASJDQAJOSD",
+            "collectibles": [
+                {
+                    "name": "Pokemon",
+                    "first": 3000,
+                    "last": 3004
+                },
+                {
+                    "name": "Digimon",
+                    "first": 3000,
+                    "last": 3004
+                },
+                {
+                    "name": "YuGiOh",
+                    "first": 3000,
+                    "last": 3004
+                }
+            ],
+            "ranking": 0
+        },
+        "3002": {
+            "name": "Andres",
+            "address": 3002,
+            "next": 3003,
+            "public_key": "aisjdoasidj",
+            "collectibles": [],
+            "ranking": 1
+        },
+        "3003": {
+            "name": "Luccas",
+            "address": 3003,
+            "next": 3004,
+            "public_key": "AKISHD9aYD",
+            "collectibles": [],
+            "ranking": 2
+        },
+        "3004": {
+            "name": "Matthew",
+            "address": "3004",
+            "next": "3000",
+            "public_key": "ALKSIDJ*(QWUE(*@Q",
+            "collectibles": [],
+            "ranking": 3
+        }
+    }
+}
